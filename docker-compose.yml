@@ -1,0 +1,91 @@
+version: "3.8"
+
+services:
+    php:
+        container_name: movie-php
+        build:
+            context: ./
+            dockerfile: "./docker/php/Dockerfile"
+            args:
+                - BUILD_UID=${DOCKER_UID}
+                - BUILD_GID=${DOCKER_GID}
+        environment:
+            XDEBUG_CONFIG: "remote_host={{127.0.0.1}}"
+            PHP_IDE_CONFIG: "serverName=host.docker.internal"
+        working_dir: /var/www/html
+        ports:
+            - "8080:8080"
+        networks:
+            - default
+        volumes:
+            - ./:/var/www/html:cached
+            - ./node_modules:/var/www/html/node_modules:delegated
+            - ./public:/var/www/html/public:delegated
+
+    nginx:
+        container_name: movie-nginx
+        image: wodby/nginx
+        environment:
+            NGINX_STATIC_OPEN_FILE_CACHE: "off"
+            NGINX_ERROR_LOG_LEVEL: debug
+            NGINX_BACKEND_HOST: php
+            NGINX_VHOST_PRESET: php
+            NGINX_SERVER_ROOT: /var/www/html/public
+        volumes:
+            - ./public:/var/www/html/public:delegated
+            - ./storage/app/public:/var/www/html/public/storage:delegated
+        networks:
+            - default
+            - traefik-gateway
+        labels:
+            - "traefik.enable=true"
+            - "traefik.docker.network=traefik-gateway"
+            - "traefik.http.routers.movie-nginx.rule=Host(`movie-app.localhost`)"
+            - "traefik.http.routers.movie-nginx.entrypoints=http"
+            - "traefik.http.routers.movie-nginx.tls=false"
+
+    mariadb:
+        container_name: movie-mariadb
+        image: mariadb:10.4
+        volumes:
+            - ./docker/mariadb:/var/lib/mysql
+        environment:
+            MYSQL_DATABASE: db
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_USER: db
+            MYSQL_PASSWORD: db
+        ports:
+            -   '34000:3306'
+
+    redis:
+        image: redis:4-alpine
+        container_name: movie-redis
+        volumes:
+          - redis:/data
+
+#  mailhog:
+#    image: mailhog/mailhog
+#    container_name: movie-mailhog
+#    networks:
+#      - default
+#      - traefik-gateway
+#    labels:
+#      - "traefik.enable=true"
+#      - "traefik.docker.network=traefik-gateway"
+#      - "traefik.http.services.movie-mailhog.loadbalancer.server.port=8025"
+#      - "traefik.http.routers.movie-mailhog.rule=Host(`mailhog.movie-filemaker-jamf-integration.localhost`)"
+#      - "traefik.http.routers.movie-mailhog.entrypoints=https"
+#      - "traefik.http.routers.movie-mailhog.tls=true"
+
+volumes:
+    mariadb:
+        driver: local
+    redis:
+        driver: local
+
+# Make the externally created network "traefik-gateway" available as network "default"
+# docker network create traefik-gateway
+networks:
+    traefik-gateway:
+        name: traefik-gateway
+        external: true
