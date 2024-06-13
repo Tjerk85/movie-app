@@ -11,7 +11,7 @@
             <div class="grid grid-cols-4 justify-center">
                 @foreach($movies as $movie)
                     <x-movie
-                        :movie="$movie->getMoviePoster()"
+                        :movie="$movie"
                         :imageSize="200"
                         :link="true"
                     />

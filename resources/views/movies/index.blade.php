@@ -12,7 +12,7 @@
             <div class="grid grid-cols-4 justify-center">
                 @foreach($trendingMovies as $movie)
                     <x-movie
-                        :movie="$movie->getMoviePoster()"
+                        :movie="$movie"
                         :imageSize="200"
                         :link="true"
                     />
@@ -24,7 +24,7 @@
             <div class="grid grid-cols-4 justify-center">
                 @foreach($popularMovies as $movie)
                     <x-movie
-                        :movie="$movie->getMoviePoster()"
+                        :movie="$movie"
                         :imageSize="200"
                         :link="true"
                     />
@@ -36,7 +36,7 @@
             <div class="grid grid-cols-4 justify-center">
                 @foreach($topRatedMovies as $movie)
                     <x-movie
-                        :movie="$movie->getMoviePoster()"
+                        :movie="$movie"
                         :imageSize="200"
                         :link="true"
                     />

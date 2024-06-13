@@ -5,7 +5,6 @@ namespace App\Http\Integrations\themoviedb\Requests;
 use App\Models\Movie;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
-use Saloon\Http\Response;
 
 class MovieRequest extends Request
 {
@@ -26,25 +25,11 @@ class MovieRequest extends Request
         return "/movie/{$this->movieId}";
     }
 
-    public function createDtoFromResponse(Response $response): mixed
+    /**
+     * @throws \JsonException
+     */
+    public function createDtoFromResponse($response): Movie
     {
-        $data = $response->json();
-
-        return new Movie(
-            id: $data['id'],
-            title: $data['title'],
-            overview: $data['overview'],
-            poster_path: $data['poster_path'],
-            vote_average: $data['vote_average'],
-            release_date: $data['release_date'],
-            genre_ids: $data['genres'],
-            backdrop_path: $data['backdrop_path'],
-            original_title: $data['original_title'],
-            original_language: $data['original_language'],
-            popularity: $data['popularity'],
-            vote_count: $data['vote_count'],
-            video: $data['video'],
-            adult: $data['adult'],
-        );
+        return Movie::createMovieObject($response->json());
     }
 }

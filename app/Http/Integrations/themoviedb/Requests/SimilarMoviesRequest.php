@@ -6,6 +6,7 @@ use App\Models\Movie;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Http\Response;
+use Illuminate\Support\Collection;
 
 class SimilarMoviesRequest extends Request
 {
@@ -26,30 +27,11 @@ class SimilarMoviesRequest extends Request
         return "/movie/{$this->movieId}/similar?language=en-US&page=1";
     }
 
-    public function createDtoFromResponse(Response $response): mixed
+    /**
+     * @throws \JsonException
+     */
+    public function createDtoFromResponse(Response $response): Movie|Collection
     {
-        $movies = [];
-        $data = $response->json('results');
-
-        foreach ($data as $movie) {
-            $movies[] = new Movie(
-                id: $movie['id'],
-                title: $movie['title'],
-                overview: $movie['overview'],
-                poster_path: $movie['poster_path'],
-                vote_average: $movie['vote_average'],
-                release_date: $movie['release_date'],
-                genre_ids: $movie['genre_ids'],
-                backdrop_path: $movie['backdrop_path'],
-                original_title: $movie['original_title'],
-                original_language: $movie['original_language'],
-                popularity: $movie['popularity'],
-                vote_count: $movie['vote_count'],
-                video: $movie['video'],
-                adult: $movie['adult'],
-            );
-        }
-
-        return collect($movies);
+        return Movie::createMovieObject(collect($response->json('results')));
     }
 }

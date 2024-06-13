@@ -1,5 +1,6 @@
 @extends('layouts.main')
 @section('content')
+    @php xdebug_break() @endphp
     <img
         class="opacity-60 absolute w-full"
         src="https://image.tmdb.org/t/p/w500{{ $movie->backdrop_path }}"
@@ -8,7 +9,7 @@
     <div class="z-10 opacity-75 mr-20">
         <div class="flex ml-20 mt-20">
             <x-movie
-                :movie="$movie->getMoviePoster()"
+                :movie="$movie"
                 :imageSize="500"
                 :link="false"
             >

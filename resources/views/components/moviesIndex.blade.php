@@ -7,7 +7,7 @@
             @foreach($movies as $movie)
                 @if($itemsToShow ? $loop->index + 1 <= $itemsToShow : count($movies))
                     <x-movie
-                            :movie="$movie->getMoviePoster()"
+                            :movie="$movie"
                             :imageSize="200"
                             :link="true"
                     />

@@ -6,6 +6,7 @@ use App\Models\Movie;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Http\Response;
+use Illuminate\Support\Collection;
 
 class PopularMoviesRequest extends Request
 {
@@ -22,25 +23,11 @@ class PopularMoviesRequest extends Request
         return '/movie/popular?language=en-US&page=1';
     }
 
-    public function createDtoFromResponse(Response $response): mixed
+    /**
+     * @throws \JsonException
+     */
+    public function createDtoFromResponse(Response $response): Movie|Collection
     {
-        $data = $response->json('results');
-
-        return collect($data)->map(fn ($movie) => new Movie(
-            id: $movie['id'],
-            title: $movie['title'],
-            overview: $movie['overview'],
-            poster_path: $movie['poster_path'],
-            vote_average: $movie['vote_average'],
-            release_date: $movie['release_date'],
-            genre_ids: $movie['genre_ids'],
-            backdrop_path: $movie['backdrop_path'],
-            original_title: $movie['original_title'],
-            original_language: $movie['original_language'],
-            popularity: $movie['popularity'],
-            vote_count: $movie['vote_count'],
-            video: $movie['video'],
-            adult: $movie['adult'],
-        ));
+        return Movie::createMovieObject(collect($response->json('results')));
     }
 }
