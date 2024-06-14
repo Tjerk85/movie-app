@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Integrations\themoviedb\TheMovieDbConnector;
-use App\Http\Integrations\themoviedb\Requests\MovieRequest;
-use App\Http\Integrations\themoviedb\Requests\PopularMoviesRequest;
-use App\Http\Integrations\themoviedb\Requests\SimilarMoviesRequest;
-use App\Http\Integrations\themoviedb\Requests\TrendingMoviesRequest;
-use App\Http\Integrations\themoviedb\Requests\TopRatedMoviesRequest;
-use App\Http\Integrations\themoviedb\Requests\ServicesToWatchRequest;
+use Illuminate\Http\Request;
+use App\Http\Integrations\TheMovieDb\TheMovieDbConnector;
+use App\Http\Integrations\TheMovieDb\Requests\MovieRequest;
+use App\Http\Integrations\TheMovieDb\Requests\PopularMoviesRequest;
+use App\Http\Integrations\TheMovieDb\Requests\SimilarMoviesRequest;
+use App\Http\Integrations\TheMovieDb\Requests\TrendingMoviesRequest;
+use App\Http\Integrations\TheMovieDb\Requests\TopRatedMoviesRequest;
+use App\Http\Integrations\TheMovieDb\Requests\ServicesToWatchRequest;
 
 class MovieController extends Controller
 {
@@ -23,12 +24,12 @@ class MovieController extends Controller
     /**
      * Display a listing of the resource {Trending, Popular, TopRated}
      */
-    public function index(?string $when = 'day')
+    public function index(Request $request)
     {
         $limit = 4;
 
         return view('movies.index', [
-            'trendingMovies' => $this->connector->send(new TrendingMoviesRequest($when))->dto()->take($limit),
+            'trendingMovies' => $this->connector->send(new TrendingMoviesRequest($request->query('trending', 'day')))->dto()->take($limit),
             'popularMovies'  => $this->connector->send(new PopularMoviesRequest())->dto()->take($limit),
             'topRatedMovies' => $this->connector->send(new TopRatedMoviesRequest())->dto()->take($limit),
         ]);

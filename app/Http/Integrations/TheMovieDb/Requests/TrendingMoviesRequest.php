@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Integrations\themoviedb\Requests;
+namespace App\Http\Integrations\TheMovieDb\Requests;
 
 use App\Models\Movie;
 use Saloon\Enums\Method;
@@ -8,7 +8,7 @@ use Saloon\Http\Request;
 use Saloon\Http\Response;
 use Illuminate\Support\Collection;
 
-class TopRatedMoviesRequest extends Request
+class TrendingMoviesRequest extends Request
 {
     /**
      * The HTTP method of the request
@@ -16,11 +16,18 @@ class TopRatedMoviesRequest extends Request
     protected Method $method = Method::GET;
 
     /**
+     * $when parameter can be {day} or {week}
+     */
+    public function __construct(protected readonly string $when)
+    {
+    }
+
+    /**
      * The endpoint for the request
      */
     public function resolveEndpoint(): string
     {
-        return '/movie/top_rated?language=en-US&page=1';
+        return "/trending/movie/{$this->when}?language=en-US";
     }
 
     /**

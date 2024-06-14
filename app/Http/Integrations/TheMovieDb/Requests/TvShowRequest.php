@@ -1,33 +1,38 @@
 <?php
 
-namespace App\Http\Integrations\themoviedb\Requests;
+namespace App\Http\Integrations\TheMovieDb\Requests;
 
-use App\Models\Movie;
+use App\Models\TvShow;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Http\Response;
 use Illuminate\Support\Collection;
 
-class PopularMoviesRequest extends Request
+class TvShowRequest extends Request
 {
     /**
      * The HTTP method of the request
      */
     protected Method $method = Method::GET;
 
+    public function __construct(public readonly int $seriesId)
+    {
+    }
+
     /**
      * The endpoint for the request
      */
     public function resolveEndpoint(): string
     {
-        return '/movie/popular?language=en-US&page=1';
+        return "/tv/{$this->seriesId}?language=en-US";
     }
 
     /**
      * @throws \JsonException
      */
-    public function createDtoFromResponse(Response $response): Movie|Collection
+    public function createDtoFromResponse(Response $response): TvShow|Collection
     {
-        return Movie::createMovieObject(collect($response->json('results')));
+        return TvShow::createTvShowObject($response->json());
     }
+
 }

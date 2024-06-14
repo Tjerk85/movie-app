@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Integrations\themoviedb;
+namespace App\Http\Integrations\TheMovieDb;
 
 use Saloon\Http\Connector;
 use Saloon\Traits\Plugins\AcceptsJson;

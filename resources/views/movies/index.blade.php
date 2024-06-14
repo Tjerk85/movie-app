@@ -6,8 +6,8 @@
 
             <div class="bg-gray-800 p-4 rounded">
                 <span class="font-bold">Trending this: </span>
-                <a href="{{ route('home') }}/day">Day</a> |
-                <a href="{{ route('home') }}/week">Week</a>
+                <a href="{{ route('home') }}?trending=day">Day</a> |
+                <a href="{{ route('home') }}/?trending=week">Week</a>
             </div>
             <div class="grid grid-cols-4 justify-center">
                 @foreach($trendingMovies as $movie)

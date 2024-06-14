@@ -6,42 +6,42 @@ use Illuminate\Support\Collection;
 use Saloon\Exceptions\Request\RequestException;
 use Saloon\Exceptions\Request\FatalRequestException;
 use App\Http\Integrations\TheMovieDb\TheMovieDbConnector;
-use App\Http\Integrations\TheMovieDb\Requests\GenresRequest;
+use App\Http\Integrations\TheMovieDb\Requests\TvGenresRequest;
 
-/** Get the movie instance */
-readonly class Movie
+/** Get the tv instance */
+readonly class TvShow
 {
     /**
-     * @param int              $id
-     * @param string           $title
-     * @param string           $overview
-     * @param string|null      $poster_path
-     * @param float            $vote_average
-     * @param string           $release_date
-     * @param Collection|array $genre_ids
-     * @param string|null      $backdrop_path
-     * @param string           $original_title
-     * @param string           $original_language
-     * @param float            $popularity
-     * @param int              $vote_count
-     * @param bool             $video
      * @param bool             $adult
+     * @param string|null      $backdrop_path
+     * @param Collection|array $genre_ids
+     * @param int              $id
+     * @param array            $origin_country
+     * @param string           $original_language
+     * @param string           $original_name
+     * @param string           $overview
+     * @param float            $popularity
+     * @param string|null      $poster_path
+     * @param string           $first_air_date
+     * @param string           $name
+     * @param float            $vote_average
+     * @param int              $vote_count
      */
     public function __construct(
-        public int              $id,
-        public string           $title,
-        public string           $overview,
-        public string|null      $poster_path,
-        public float            $vote_average,
-        public string           $release_date,
-        public Collection|array $genre_ids,
-        public string|null      $backdrop_path,
-        public string           $original_title,
-        public string           $original_language,
-        public float            $popularity,
-        public int              $vote_count,
-        public bool             $video,
         public bool             $adult,
+        public string|null      $backdrop_path,
+        public Collection|array $genre_ids,
+        public int              $id,
+        public array            $origin_country,
+        public string           $original_language,
+        public string           $original_name,
+        public string           $overview,
+        public float            $popularity,
+        public string|null      $poster_path,
+        public string           $first_air_date,
+        public string           $name,
+        public float            $vote_average,
+        public int              $vote_count,
     )
     {
     }
@@ -51,11 +51,12 @@ readonly class Movie
      * @return Collection
      * @throws \JsonException
      */
-    static public function createMovieObject($response): Movie|Collection
+    static public function createTvShowObject($response): TvShow|Collection
     {
-        if (!is_array($response) && $response->count() > 1) {
-            return $response->map(fn ($movie) => self::mapObject($movie));
+        if (! is_array($response) && $response->count() > 1) {
+            return $response->map(fn ($tv) => self::mapObject($tv));
         }
+
         return self::mapObject($response);
     }
 
@@ -68,22 +69,22 @@ readonly class Movie
     static public function mapObject($object): self
     {
         return new self(
-            $object['id'],
-            $object['title'],
-            $object['overview'],
-            $object['poster_path'],
-            $object['vote_average'],
-            $object['release_date'],
+            $object['adult'],
+            $object['backdrop_path'],
             isset($object['genre_ids'])
                 ? self::getGenreByIds($object['genre_ids'])
                 : self::getGenreByIds($object['genres']),
-            $object['backdrop_path'] ?? null,
-            $object['original_title'],
+            $object['id'],
+            $object['origin_country'],
             $object['original_language'],
+            $object['original_name'],
+            $object['overview'],
             $object['popularity'],
+            $object['poster_path'],
+            $object['first_air_date'],
+            $object['name'],
+            $object['vote_average'],
             $object['vote_count'],
-            $object['video'],
-            $object['adult']
         );
     }
 
@@ -96,7 +97,7 @@ readonly class Movie
         $connector = new TheMovieDbConnector();
 
         /** @var Collection $genres */
-        $genres = $connector->send(new GenresRequest())->dto();
+        $genres = $connector->send(new TvGenresRequest())->dto();
 
         $result = $genres->whereIn('id', $genresObject);
 
