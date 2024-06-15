@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Integrations\TheMovieDb\Requests;
+namespace App\Http\Integrations\TheMovieDb\Requests\TvShows;
 
 use App\Models\TvShow;
 use Saloon\Enums\Method;

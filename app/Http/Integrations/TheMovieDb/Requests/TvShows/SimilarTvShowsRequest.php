@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Integrations\TheMovieDb\Requests;
+namespace App\Http\Integrations\TheMovieDb\Requests\TvShows;
 
 use App\Models\TvShow;
 use Saloon\Enums\Method;
@@ -8,19 +8,23 @@ use Saloon\Http\Request;
 use Saloon\Http\Response;
 use Illuminate\Support\Collection;
 
-class PopularTvShowsRequest extends Request
+class SimilarTvShowsRequest extends Request
 {
     /**
      * The HTTP method of the request
      */
     protected Method $method = Method::GET;
 
+    public function __construct(public readonly int $seriesId)
+    {
+    }
+
     /**
      * The endpoint for the request
      */
     public function resolveEndpoint(): string
     {
-        return '/tv/popular?language=en-US&page=1';
+        return "/tv/{$this->seriesId}/similar?language=en-US";
     }
 
     /**

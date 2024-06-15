@@ -1,14 +1,13 @@
 <?php
 
-namespace App\Http\Integrations\TheMovieDb\Requests;
+namespace App\Http\Integrations\TheMovieDb\Requests\Movies;
 
 use App\Models\Genre;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Http\Response;
-use Illuminate\Support\Collection;
 
-class TvGenresRequest extends Request
+class GenresRequest extends Request
 {
     /**
      * The HTTP method of the request
@@ -20,10 +19,10 @@ class TvGenresRequest extends Request
      */
     public function resolveEndpoint(): string
     {
-        return '/genre/tv/list?language=en';
+        return '/genre/movie/list';
     }
 
-    public function createDtoFromResponse(Response $response): Collection
+    public function createDtoFromResponse(Response $response): mixed
     {
         $genres = [];
         $data   = $response->json('genres');

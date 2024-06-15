@@ -3,22 +3,45 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Integrations\TheMovieDb\EndPoints;
 use App\Http\Integrations\TheMovieDb\TheMovieDbConnector;
-use App\Http\Integrations\TheMovieDb\Requests\MovieRequest;
-use App\Http\Integrations\TheMovieDb\Requests\PopularMoviesRequest;
-use App\Http\Integrations\TheMovieDb\Requests\SimilarMoviesRequest;
-use App\Http\Integrations\TheMovieDb\Requests\TrendingMoviesRequest;
-use App\Http\Integrations\TheMovieDb\Requests\TopRatedMoviesRequest;
-use App\Http\Integrations\TheMovieDb\Requests\ServicesToWatchRequest;
+use App\Http\Integrations\TheMovieDb\Requests\Movies\GeneralMovieRequest;
+use App\Http\Integrations\TheMovieDb\Requests\Movies\ServicesToWatchRequest;
 
 class MovieController extends Controller
 {
 
     private TheMovieDbConnector $connector;
+    private EndPoints $endPoints;
+    private $topRated;
+    private $trending;
+    private $popular;
 
     public function __construct()
     {
         $this->connector = new TheMovieDbConnector();
+        $this->endPoints = new EndPoints();
+
+        $this->topRated = $this->connector
+            ->send(new GeneralMovieRequest(
+                $this->endPoints->set($this->endPoints::$TOPRATEDMOVIEREQUEST)
+                    ->getEndPoint(),
+                'results'
+            ));
+
+        $this->trending = $this->connector
+            ->send(new GeneralMovieRequest(
+                $this->endPoints->set($this->endPoints::$TRENDINGMOVIEREQUEST, $when)
+                    ->getEndPoint(),
+                'results'
+            ));
+
+        $this->popular = $this->connector
+            ->send(new GeneralMovieRequest(
+                $this->endPoints->set($this->endPoints::$POPULARMOVIEREQUEST)
+                    ->getEndPoint(),
+                'results'
+            ));
     }
 
     /**
@@ -29,9 +52,9 @@ class MovieController extends Controller
         $limit = 4;
 
         return view('movies.index', [
-            'trendingMovies' => $this->connector->send(new TrendingMoviesRequest($request->query('trending', 'day')))->dto()->take($limit),
-            'popularMovies'  => $this->connector->send(new PopularMoviesRequest())->dto()->take($limit),
-            'topRatedMovies' => $this->connector->send(new TopRatedMoviesRequest())->dto()->take($limit),
+            'trendingMovies' => $this->trending->dto()->take($limit),
+            'popularMovies'  => $this->popular->dto()->take($limit),
+            'topRatedMovies' => $this->topRated->dto()->take($limit),
         ]);
     }
 
@@ -41,9 +64,22 @@ class MovieController extends Controller
     public function showMovie(int $id)
     {
         return view('movies.show', [
-            'movie'             => $this->connector->send(new MovieRequest($id))->dto(),
-            'similarMovies'     => $this->connector->send(new SimilarMoviesRequest($id))->dto()->take(8),
-            'servicesForMovies' => collect($this->connector->send(new ServicesToWatchRequest($id))->json('results')),
+            'movie'             =>
+                $this->connector->send(new GeneralMovieRequest(
+                    $this->endPoints->set($this->endPoints::$MOVIEREQUEST, $id)
+                        ->getEndPoint()
+                ))->dto(),
+            'similarMovies'     =>
+                $this->connector->send(new GeneralMovieRequest(
+                    $this->endPoints->set($this->endPoints::$SIMILARMOVIEREQUEST, $id)
+                        ->getEndPoint(),
+                    'results'
+                ))->dto()
+                    ->take(8),
+            'servicesForMovies' =>
+                collect($this->connector
+                    ->send(new ServicesToWatchRequest($id))
+                    ->json('results')),
             'itemsToShow'       => 8,
         ]);
     }
@@ -54,7 +90,7 @@ class MovieController extends Controller
     public function topRatedMovies()
     {
         return view('movies.movies', [
-            'movies' => $this->connector->send(new TopRatedMoviesRequest())->dto(),
+            'movies' => $this->topRated->dto(),
             'title'  => 'Top Rated Movies',
         ]);
     }
@@ -62,10 +98,10 @@ class MovieController extends Controller
     /**
      * Display a listing of trending movies.
      */
-    public function trendingMovies(string $title = 'day')
+    public function trendingMovies(string $when = 'day')
     {
         return view('movies.trending', [
-            'movies' => $this->connector->send(new TrendingMoviesRequest($title))->dto(),
+            'movies' => $this->trending->dto(),
             'title'  => 'Trending Movies',
         ]);
     }
@@ -76,7 +112,7 @@ class MovieController extends Controller
     public function popularMovies()
     {
         return view('movies.movies', [
-            'movies' => $this->connector->send(new PopularMoviesRequest())->dto(),
+            'movies' => $this->popular->dto(),
             'title'  => 'Popular Movies',
         ]);
     }

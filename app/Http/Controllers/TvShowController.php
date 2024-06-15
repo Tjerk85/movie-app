@@ -3,12 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Integrations\TheMovieDb\TheMovieDbConnector;
-use App\Http\Integrations\TheMovieDb\Requests\TvShowRequest;
-use App\Http\Integrations\TheMovieDb\Requests\PopularTvShowsRequest;
-use App\Http\Integrations\TheMovieDb\Requests\SimilarMoviesRequest;
-use App\Http\Integrations\TheMovieDb\Requests\SimilarTvShowsRequest;
-use App\Http\Integrations\TheMovieDb\Requests\OnTheAirTvShowsRequest;
-use App\Http\Integrations\TheMovieDb\Requests\TopRatedTvShowsRequest;
+use App\Http\Integrations\TheMovieDb\Requests\TvShows\TvShowRequest;
+use App\Http\Integrations\TheMovieDb\Requests\TvShows\SimilarTvShowsRequest;
+use App\Http\Integrations\TheMovieDb\Requests\TvShows\PopularTvShowsRequest;
+use App\Http\Integrations\TheMovieDb\Requests\TvShows\TopRatedTvShowsRequest;
+use App\Http\Integrations\TheMovieDb\Requests\TvShows\OnTheAirTvShowsRequest;
 
 class TvShowController extends Controller
 {

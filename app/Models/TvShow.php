@@ -6,7 +6,7 @@ use Illuminate\Support\Collection;
 use Saloon\Exceptions\Request\RequestException;
 use Saloon\Exceptions\Request\FatalRequestException;
 use App\Http\Integrations\TheMovieDb\TheMovieDbConnector;
-use App\Http\Integrations\TheMovieDb\Requests\TvGenresRequest;
+use App\Http\Integrations\TheMovieDb\Requests\TvShows\TvGenresRequest;
 
 /** Get the tv instance */
 readonly class TvShow

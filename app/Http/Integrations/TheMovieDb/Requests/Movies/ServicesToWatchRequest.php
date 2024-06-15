@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Integrations\TheMovieDb\Requests;
+namespace App\Http\Integrations\TheMovieDb\Requests\Movies;
 
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
