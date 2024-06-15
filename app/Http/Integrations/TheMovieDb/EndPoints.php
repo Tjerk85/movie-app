@@ -34,6 +34,4 @@ class EndPoints
 
         return $this->url;
     }
-
-
 }
