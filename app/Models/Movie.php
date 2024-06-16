@@ -4,9 +4,10 @@ namespace App\Models;
 
 use Illuminate\Support\Collection;
 use Saloon\Exceptions\Request\RequestException;
+use App\Http\Integrations\TheMovieDb\EndPoints;
 use Saloon\Exceptions\Request\FatalRequestException;
 use App\Http\Integrations\TheMovieDb\TheMovieDbConnector;
-use App\Http\Integrations\TheMovieDb\Requests\Movies\GenresRequest;
+use App\Http\Integrations\TheMovieDb\Requests\GenresRequest;
 
 /** Get the movie instance */
 readonly class Movie
@@ -53,9 +54,10 @@ readonly class Movie
      */
     static public function createMovieObject($response): Movie|Collection
     {
-        if (!is_array($response) && $response->count() > 1) {
+        if (! is_array($response) && $response->count() > 1) {
             return $response->map(fn ($movie) => self::mapObject($movie));
         }
+
         return self::mapObject($response);
     }
 
@@ -94,9 +96,15 @@ readonly class Movie
     static private function getGenreByIds($genresObject): Collection
     {
         $connector = new TheMovieDbConnector();
+        $endPoint  = new EndPoints();
 
         /** @var Collection $genres */
-        $genres = $connector->send(new GenresRequest())->dto();
+        $genres = $connector->send(new GenresRequest(
+            $endPoint
+                ->set($endPoint::$MOVIEGENREREREQUEST)
+                ->getEndPoint()
+        ))
+            ->dto();
 
         $result = $genres->whereIn('id', $genresObject);
 

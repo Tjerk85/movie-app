@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Services\MovieServices;
+use App\Services\MovieService;
 use App\Http\Integrations\TheMovieDb\TheMovieDbConnector;
 use App\Http\Integrations\TheMovieDb\Requests\Movies\ServicesToWatchRequest;
 
@@ -11,12 +11,12 @@ class MovieController extends Controller
 {
 
     private TheMovieDbConnector $connector;
-    private MovieServices $movieService;
+    private MovieService $movieService;
 
     public function __construct()
     {
         $this->connector    = new TheMovieDbConnector();
-        $this->movieService = new MovieServices();
+        $this->movieService = new MovieService();
     }
 
     /**

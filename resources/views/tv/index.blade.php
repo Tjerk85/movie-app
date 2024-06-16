@@ -4,7 +4,7 @@
         <div class="max-w-[1000px]">
             <h1 class="ml-5 mb-5 text-2xl">Trending tv shows:</h1>
             <div class="grid grid-cols-4 justify-center">
-                @foreach($trendingTvShows as $tvShow)
+                @foreach($onTheAirTvShows as $tvShow)
                     <x-tvShow
                         :tvShow="$tvShow"
                         :imageSize="200"
@@ -12,7 +12,7 @@
                     />
                 @endforeach
             </div>
-            <x-arrow :title="'More trending'" :route="route('onTheAirTvShows')"/>
+            <x-arrow :title="'More on the air'" :route="route('onTheAirTvShows')"/>
 
             <h1 class="ml-5 mb-5 text-2xl">Popular tv shows:</h1>
             <div class="grid grid-cols-4 justify-center">

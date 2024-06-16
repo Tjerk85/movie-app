@@ -3,10 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Support\Collection;
+use Saloon\Traits\Responses\HasResponse;
+use Saloon\Contracts\DataObjects\WithResponse;
 use Saloon\Exceptions\Request\RequestException;
+use App\Http\Integrations\TheMovieDb\EndPoints;
 use Saloon\Exceptions\Request\FatalRequestException;
 use App\Http\Integrations\TheMovieDb\TheMovieDbConnector;
-use App\Http\Integrations\TheMovieDb\Requests\TvShows\TvGenresRequest;
+use App\Http\Integrations\TheMovieDb\Requests\GenresRequest;
 
 /** Get the tv instance */
 readonly class TvShow
@@ -48,7 +51,7 @@ readonly class TvShow
 
     /**
      * @param $response
-     * @return Collection
+     * @return TvShow
      * @throws \JsonException
      */
     static public function createTvShowObject($response): TvShow|Collection
@@ -62,11 +65,11 @@ readonly class TvShow
 
     /**
      * @param $object
-     * @return Movie
+     * @return TvShow
      * @throws FatalRequestException
      * @throws RequestException
      */
-    static public function mapObject($object): self
+    static public function mapObject($object): TvShow|array
     {
         return new self(
             $object['adult'],
@@ -95,9 +98,15 @@ readonly class TvShow
     static private function getGenreByIds($genresObject): Collection
     {
         $connector = new TheMovieDbConnector();
+        $endPoint  = new EndPoints();
 
         /** @var Collection $genres */
-        $genres = $connector->send(new TvGenresRequest())->dto();
+        $genres = $connector->send(new GenresRequest(
+            $endPoint
+                ->set($endPoint::$TVSHOWGENREREQUEST)
+                ->getEndPoint()
+        ))
+            ->dto();
 
         $result = $genres->whereIn('id', $genresObject);
 

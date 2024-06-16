@@ -1,7 +1,6 @@
 @props(['tvShow' => null, 'link', 'imageSize', 'genres' => null])
 
 <div class="mb-10 justify-center items-center flex flex-col space-x-14 space-y-4 max-w-[400px]">
-    @php xdebug_break() @endphp
     <p class="font-bold max-w-[180px]">{{ $tvShow->name }}</p>
     @if($link)
         <a href="{{ route('showTvShow', ['tvShowId' => $tvShow->id]) }}">

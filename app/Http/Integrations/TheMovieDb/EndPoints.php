@@ -10,7 +10,13 @@ class EndPoints
     static public $TOPRATEDMOVIEREQUEST = '/movie/top_rated?language=en-US';
     static public $TRENDINGMOVIEREQUEST = '/trending/movie/{$param}?language=en-US';
     static public $SERVICESTOWATCHMOVIEREQUEST = '/movie/{$param}/watch/providers';
-    private string $url;
+    static public $ONTHEAIRTVSHOWSREQUEST = '/tv/on_the_air?language=en-US';
+    static public $POPULARTVSHOWSREQUEST = '/tv/popular?language=en-US&page=1';
+    static public $TOPRATEDTVSHOWSREQUEST = '/tv/top_rated?language=en-US';
+    static public $SIMILARTVSHOWSREQUEST = '/tv/{$param}/similar?language=en-US&page=1';
+    static public $TVSHOWREQUEST = '/tv/{$param}?language=en-US';
+    static public $MOVIEGENREREREQUEST = '/genre/movie/list';
+    static public $TVSHOWGENREREQUEST = '/genre/tv/list';
     private string $endPoint;
     private string $param;
 
@@ -26,12 +32,10 @@ class EndPoints
         return $this;
     }
 
-    public function getEndPoint()
+    public function getEndPoint(): string
     {
-        $this->url = isset($this->param)
+        return isset($this->param)
             ? str_replace('{$param}', $this->param, $this->endPoint)
             : $this->endPoint;
-
-        return $this->url;
     }
 }

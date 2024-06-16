@@ -5,8 +5,9 @@ namespace App\Services;
 use App\Http\Integrations\TheMovieDb\EndPoints;
 use App\Http\Integrations\TheMovieDb\TheMovieDbConnector;
 use App\Http\Integrations\TheMovieDb\Requests\Movies\GeneralMovieRequest;
+use function PHPUnit\Framework\isEmpty;
 
-class MovieServices
+class MovieService
 {
     private EndPoints $endPoints;
     private TheMovieDbConnector $connector;
@@ -58,15 +59,16 @@ class MovieServices
 
     public function getSimilar($id)
     {
-        return $this->connector
+        $results = $this->connector
             ->send(new GeneralMovieRequest(
                 $this->endPoints
                     ->set($this->endPoints::$SIMILARMOVIEREQUEST, $id)
                     ->getEndPoint(),
                 'results'
             ))
-            ->dto()
-            ->take(8);
+            ->dto();
+
+        return isEmpty($results) ? $results : $results->take(8);
     }
 
     public function getMovie($id)

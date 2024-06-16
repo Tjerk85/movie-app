@@ -1,14 +1,13 @@
 <?php
 
-namespace App\Http\Integrations\TheMovieDb\Requests\Movies;
+namespace App\Http\Integrations\TheMovieDb\Requests\TvShows;
 
-use App\Models\Movie;
+use App\Models\TvShow;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Illuminate\Support\Collection;
-use App\Http\Integrations\TheMovieDb\EndPoints;
 
-class GeneralMovieRequest extends Request
+class GeneralTvShowRequest extends Request
 {
     /**
      * The HTTP method of the request
@@ -33,16 +32,16 @@ class GeneralMovieRequest extends Request
     /**
      * @throws \JsonException
      */
-    public function createDtoFromResponse($response): Movie|Collection|null
+    public function createDtoFromResponse($response): TvShow|Collection|null
     {
         if ($this->jsonResultKey) {
             if ($response->json('total_results') === 0) {
                 return null;
             }
 
-            return Movie::createMovieObject(collect($response->json($this->jsonResultKey)));
+            return TvShow::createTvShowObject(collect($response->json($this->jsonResultKey)));
         }
 
-        return Movie::createMovieObject($response->json());
+        return TvShow::createTvShowObject($response->json());
     }
 }

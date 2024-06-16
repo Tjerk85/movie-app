@@ -4,15 +4,19 @@
     <div class="max-w-[1000px]">
         <h1 class="ml-5 mb-5 text-2xl">{{ $title }}</h1>
         <div class="grid grid-cols-4 justify-center">
-            @foreach($movies as $movie)
-                @if($itemsToShow ? $loop->index + 1 <= $itemsToShow : count($movies))
-                    <x-movie
+            @if(!empty($movies))
+                @foreach($movies as $movie)
+                    @if($itemsToShow ? $loop->index + 1 <= $itemsToShow : count($movies))
+                        <x-movie
                             :movie="$movie"
                             :imageSize="200"
                             :link="true"
-                    />
-                @endif
-            @endforeach
+                        />
+                    @endif
+                @endforeach
+            @else
+                <p>{{ $tvShows }}</p>
+            @endif
         </div>
     </div>
 </div>
