@@ -3,13 +3,16 @@
 namespace App\Services;
 
 use App\Http\Integrations\TheMovieDb\EndPoints;
-use App\Http\Integrations\TheMovieDb\TheMovieDbConnector;
+use App\Http\Integrations\TheMovieDb\Requests\ActorRequest;
 use App\Http\Integrations\TheMovieDb\Requests\Movies\GeneralMovieRequest;
+use App\Http\Integrations\TheMovieDb\TheMovieDbConnector;
+
 use function PHPUnit\Framework\isEmpty;
 
 class MovieService
 {
     private EndPoints $endPoints;
+
     private TheMovieDbConnector $connector;
 
     public function __construct()
@@ -80,5 +83,18 @@ class MovieService
                     ->getEndPoint()
             ))
             ->dto();
+    }
+
+    public function getActorsMovie($id, $limit = null)
+    {
+        return $this->connector
+            ->send(new ActorRequest(
+                $this->endPoints
+                    ->set($this->endPoints::$ACTORREQUEST, $id)
+                    ->getEndPoint(),
+                'cast'
+            ))
+            ->dto()
+            ->take($limit);
     }
 }

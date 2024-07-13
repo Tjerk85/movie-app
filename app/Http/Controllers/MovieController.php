@@ -2,20 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Services\MovieService;
-use App\Http\Integrations\TheMovieDb\TheMovieDbConnector;
 use App\Http\Integrations\TheMovieDb\Requests\Movies\ServicesToWatchRequest;
+use App\Http\Integrations\TheMovieDb\TheMovieDbConnector;
+use App\Services\MovieService;
+use Illuminate\Http\Request;
 
 class MovieController extends Controller
 {
-
     private TheMovieDbConnector $connector;
+
     private MovieService $movieService;
 
     public function __construct()
     {
-        $this->connector    = new TheMovieDbConnector();
+        $this->connector = new TheMovieDbConnector();
         $this->movieService = new MovieService();
     }
 
@@ -25,11 +25,11 @@ class MovieController extends Controller
     public function index(Request $request)
     {
         $limit = 4;
-        $when  = $request->input('trending') ?? 'day';
+        $when = $request->input('trending') ?? 'day';
 
         return view('movies.index', [
             'trendingMovies' => $this->movieService->getTrending($when, $limit),
-            'popularMovies'  => $this->movieService->getPopular($limit),
+            'popularMovies' => $this->movieService->getPopular($limit),
             'topRatedMovies' => $this->movieService->getTopRated($limit),
         ]);
     }
@@ -45,7 +45,8 @@ class MovieController extends Controller
             'servicesForMovies' => collect($this->connector
                 ->send(new ServicesToWatchRequest($id))
                 ->json('results')),
-            'itemsToShow'       => 8,
+            'actorsMovie' => $this->movieService->getActorsMovie($id, 5),
+            'itemsToShow' => 8,
         ]);
     }
 
@@ -56,7 +57,7 @@ class MovieController extends Controller
     {
         return view('movies.movies', [
             'movies' => $this->movieService->getTopRated(),
-            'title'  => 'Top Rated Movies',
+            'title' => 'Top Rated Movies',
         ]);
     }
 
@@ -67,7 +68,7 @@ class MovieController extends Controller
     {
         return view('movies.trending', [
             'movies' => $this->movieService->getTrending($when),
-            'title'  => 'Trending Movies',
+            'title' => 'Trending Movies',
         ]);
     }
 
@@ -78,7 +79,7 @@ class MovieController extends Controller
     {
         return view('movies.movies', [
             'movies' => $this->movieService->getPopular(),
-            'title'  => 'Popular Movies',
+            'title' => 'Popular Movies',
         ]);
     }
 }

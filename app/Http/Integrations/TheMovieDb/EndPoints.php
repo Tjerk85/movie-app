@@ -30,7 +30,7 @@ class EndPoints
 
     public static $TVSHOWGENREREQUEST = '/genre/tv/list';
 
-    public static $ACTORREQUEST = '/movie/974262/credits';
+    public static $ACTORREQUEST = '/movie/{$param}/credits';
 
     private string $endPoint;
 
