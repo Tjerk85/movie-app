@@ -45,7 +45,7 @@ class MovieController extends Controller
             'servicesForMovies' => collect($this->connector
                 ->send(new ServicesToWatchRequest($id))
                 ->json('results')),
-            'actorsMovie' => $this->movieService->getActorsMovie($id, 5),
+            'actors' => $this->movieService->getActorsMovie($id, 5),
             'itemsToShow' => 8,
         ]);
     }

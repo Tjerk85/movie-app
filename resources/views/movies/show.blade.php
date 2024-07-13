@@ -24,6 +24,11 @@
             </x-movie>
             <p class="content-center ml-10">{{ $movie->overview }}</p>
         </div>
+
+        <x-actorsIndex
+            :actors="$actors"
+            :title="'Actors'"
+        />
     </div>
 
     <x-moviesIndex

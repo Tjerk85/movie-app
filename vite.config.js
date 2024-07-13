@@ -12,14 +12,8 @@ export default defineConfig({
         }),
     ],
     server: {
-        host: '0.0.0.0',
-        port: 8080,
         https: false,
-        hmr: {
-            clientPort: 8080,
-            host: 'movie-app.localhost',
-            protocol: 'ws'
-        },
+        port: 5173,
         watch: {
             usePolling: true,
         }

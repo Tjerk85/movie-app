@@ -15,7 +15,7 @@
                     @endif
                 @endforeach
             @else
-                <p>{{ $tvShows }}</p>
+                <p>{{ $movies }}</p>
             @endif
         </div>
     </div>
