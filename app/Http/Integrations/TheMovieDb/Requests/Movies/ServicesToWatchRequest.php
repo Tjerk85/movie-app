@@ -12,9 +12,7 @@ class ServicesToWatchRequest extends Request
      */
     protected Method $method = Method::GET;
 
-    public function __construct(protected readonly int $movieId)
-    {
-    }
+    public function __construct(protected readonly int $movieId) {}
 
     /**
      * The endpoint for the request

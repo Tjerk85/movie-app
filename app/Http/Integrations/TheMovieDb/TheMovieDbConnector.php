@@ -2,9 +2,9 @@
 
 namespace App\Http\Integrations\TheMovieDb;
 
+use Saloon\Http\Auth\TokenAuthenticator;
 use Saloon\Http\Connector;
 use Saloon\Traits\Plugins\AcceptsJson;
-use Saloon\Http\Auth\TokenAuthenticator;
 
 class TheMovieDbConnector extends Connector
 {

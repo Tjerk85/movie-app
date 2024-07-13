@@ -3,10 +3,9 @@
 namespace App\Http\Integrations\TheMovieDb\Requests\Movies;
 
 use App\Models\Movie;
+use Illuminate\Support\Collection;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
-use Illuminate\Support\Collection;
-use App\Http\Integrations\TheMovieDb\EndPoints;
 
 class GeneralMovieRequest extends Request
 {
@@ -18,9 +17,7 @@ class GeneralMovieRequest extends Request
     public function __construct(
         protected readonly string $endPoint,
         protected readonly string $jsonResultKey = '',
-    )
-    {
-    }
+    ) {}
 
     /**
      * The endpoint for the request

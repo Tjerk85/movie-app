@@ -3,9 +3,9 @@
 namespace App\Http\Integrations\TheMovieDb\Requests\TvShows;
 
 use App\Models\TvShow;
+use Illuminate\Support\Collection;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
-use Illuminate\Support\Collection;
 
 class GeneralTvShowRequest extends Request
 {
@@ -17,9 +17,7 @@ class GeneralTvShowRequest extends Request
     public function __construct(
         protected readonly string $endPoint,
         protected readonly string $jsonResultKey = '',
-    )
-    {
-    }
+    ) {}
 
     /**
      * The endpoint for the request

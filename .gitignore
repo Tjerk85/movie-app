@@ -18,4 +18,5 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
-docker/mariadb
+docker/mysql
+.DS_Store

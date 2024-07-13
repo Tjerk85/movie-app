@@ -3,10 +3,10 @@
 namespace App\Http\Integrations\TheMovieDb\Requests;
 
 use App\Models\Genre;
+use Illuminate\Support\Collection;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Http\Response;
-use Illuminate\Support\Collection;
 
 class GenresRequest extends Request
 {
@@ -15,9 +15,7 @@ class GenresRequest extends Request
      */
     protected Method $method = Method::GET;
 
-    public function __construct(public readonly string $endPoint)
-    {
-    }
+    public function __construct(public readonly string $endPoint) {}
 
     /**
      * The endpoint for the request
@@ -30,7 +28,7 @@ class GenresRequest extends Request
     public function createDtoFromResponse(Response $response): Genre|Collection
     {
         $genres = [];
-        $data   = $response->json('genres');
+        $data = $response->json('genres');
 
         foreach ($data as $genre) {
             $genres[] = new Genre(

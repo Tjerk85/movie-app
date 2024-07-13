@@ -2,59 +2,39 @@
 
 namespace App\Models;
 
-use Illuminate\Support\Collection;
-use Saloon\Traits\Responses\HasResponse;
-use Saloon\Contracts\DataObjects\WithResponse;
-use Saloon\Exceptions\Request\RequestException;
 use App\Http\Integrations\TheMovieDb\EndPoints;
-use Saloon\Exceptions\Request\FatalRequestException;
-use App\Http\Integrations\TheMovieDb\TheMovieDbConnector;
 use App\Http\Integrations\TheMovieDb\Requests\GenresRequest;
+use App\Http\Integrations\TheMovieDb\TheMovieDbConnector;
+use Illuminate\Support\Collection;
+use Saloon\Exceptions\Request\FatalRequestException;
+use Saloon\Exceptions\Request\RequestException;
 
 /** Get the tv instance */
 readonly class TvShow
 {
-    /**
-     * @param bool             $adult
-     * @param string|null      $backdrop_path
-     * @param Collection|array $genre_ids
-     * @param int              $id
-     * @param array            $origin_country
-     * @param string           $original_language
-     * @param string           $original_name
-     * @param string           $overview
-     * @param float            $popularity
-     * @param string|null      $poster_path
-     * @param string           $first_air_date
-     * @param string           $name
-     * @param float            $vote_average
-     * @param int              $vote_count
-     */
     public function __construct(
-        public bool             $adult,
-        public string|null      $backdrop_path,
+        public bool $adult,
+        public ?string $backdrop_path,
         public Collection|array $genre_ids,
-        public int              $id,
-        public array            $origin_country,
-        public string           $original_language,
-        public string           $original_name,
-        public string           $overview,
-        public float            $popularity,
-        public string|null      $poster_path,
-        public string           $first_air_date,
-        public string           $name,
-        public float            $vote_average,
-        public int              $vote_count,
-    )
-    {
-    }
+        public int $id,
+        public array $origin_country,
+        public string $original_language,
+        public string $original_name,
+        public string $overview,
+        public float $popularity,
+        public ?string $poster_path,
+        public string $first_air_date,
+        public string $name,
+        public float $vote_average,
+        public int $vote_count,
+    ) {}
 
     /**
-     * @param $response
      * @return TvShow
+     *
      * @throws \JsonException
      */
-    static public function createTvShowObject($response): TvShow|Collection
+    public static function createTvShowObject($response): TvShow|Collection
     {
         if (! is_array($response) && $response->count() > 1) {
             return $response->map(fn ($tv) => self::mapObject($tv));
@@ -64,12 +44,12 @@ readonly class TvShow
     }
 
     /**
-     * @param $object
      * @return TvShow
+     *
      * @throws FatalRequestException
      * @throws RequestException
      */
-    static public function mapObject($object): TvShow|array
+    public static function mapObject($object): TvShow|array
     {
         return new self(
             $object['adult'],
@@ -95,10 +75,10 @@ readonly class TvShow
      * @throws FatalRequestException
      * @throws RequestException
      */
-    static private function getGenreByIds($genresObject): Collection
+    private static function getGenreByIds($genresObject): Collection
     {
         $connector = new TheMovieDbConnector();
-        $endPoint  = new EndPoints();
+        $endPoint = new EndPoints();
 
         /** @var Collection $genres */
         $genres = $connector->send(new GenresRequest(

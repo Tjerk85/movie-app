@@ -37,6 +37,6 @@ return [
 
     'themoviedb' => [
         'token' => env('THE_MOVIE_DB_TOKEN'),
-    ]
+    ],
 
 ];

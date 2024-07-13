@@ -3,14 +3,15 @@
 namespace App\Services;
 
 use App\Http\Integrations\TheMovieDb\EndPoints;
-use App\Http\Integrations\TheMovieDb\TheMovieDbConnector;
-use App\Http\Integrations\TheMovieDb\Requests\Movies\GeneralMovieRequest;
 use App\Http\Integrations\TheMovieDb\Requests\TvShows\GeneralTvShowRequest;
+use App\Http\Integrations\TheMovieDb\TheMovieDbConnector;
+
 use function PHPUnit\Framework\isEmpty;
 
 class TvShowService
 {
     private EndPoints $endPoints;
+
     private TheMovieDbConnector $connector;
 
     public function __construct()
