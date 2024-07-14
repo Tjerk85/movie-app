@@ -27,7 +27,7 @@
 
         <x-actorsIndex
             :actors="$actors"
-            :title="'Actors'"
+            :title="'Actors:'"
         />
     </div>
 
