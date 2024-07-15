@@ -1,10 +1,9 @@
 @props(['actor' => null, 'link', 'imageSize'])
 
-<div class="mb-10 mt-10 flex flex-col max-w-[400px]">
-
+<div class="mb-10 mt-10 flex flex-col max-w-[{{$imageSize}}px]">
     <p class="font-bold text-xs h-12">{{ $actor->name }}</p>
     @if($link)
-        <a href="{{ route('showMovie', ['movieId' => $actor->id]) }}">
+        <a href="{{ route('showActor', ['id' => $actor->id]) }}">
             <img
                 class="w-[200px]"
                 src="https://image.tmdb.org/t/p/w{{ $imageSize }}/{{ $actor->profile_path }}"
@@ -13,10 +12,10 @@
         </a>
     @else
         <img
-            class="w-[200px]"
+            class="w-[{{$imageSize}}px]"
             src="https://image.tmdb.org/t/p/w{{ $imageSize }}/{{ $actor->profile_path }}"
             alt="{{ $actor->name }}"
         >
     @endif
-
+    {{ $slot }}
 </div>

@@ -10,7 +10,7 @@
                         <x-actor
                             :actor="$actor"
                             :imageSize="200"
-                            :link="false"
+                            :link="true"
                         />
                     @endif
                 @endforeach

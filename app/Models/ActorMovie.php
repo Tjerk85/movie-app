@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Support\Collection;
 
 /** Get the movie instance */
-readonly class Actor
+readonly class ActorMovie
 {
     /**
      * @param bool $adult
@@ -41,7 +41,7 @@ readonly class Actor
     /**
      * @throws \JsonException
      */
-    public static function createActorObject($response): Actor|Collection
+    public static function createActorObject($response): ActorMovie|Collection
     {
         if (!is_array($response) && $response->count() > 1) {
             return $response->map(fn($movie) => self::mapObject($movie));

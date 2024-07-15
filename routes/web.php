@@ -17,3 +17,6 @@ Route::get('/tv/show/{tvShowId}', [TvShowController::class, 'showTvShow'])->name
 Route::get('/tv/trending', [TvShowController::class, 'onTheAirTvShows'])->name('onTheAirTvShows');
 Route::get('/tv/popular', [TvShowController::class, 'popularTvShows'])->name('popularTvShows');
 Route::get('/tv/top-rated', [TvShowController::class, 'topRatedTvShows'])->name('topRatedTvShows');
+
+// Actor
+Route::get('/actors/actor/{id}', [\App\Http\Controllers\ActorController::class, 'showActor'])->name('showActor');

@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Integrations\TheMovieDb\Requests;
+namespace App\Http\Integrations\TheMovieDb\Requests\Actors;
 
-use App\Models\Actor;
+use App\Models\ActorSingle;
 use Illuminate\Support\Collection;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
-class ActorRequest extends Request
+class ActorSingleRequest extends Request
 {
     /**
      * The HTTP method of the request
@@ -30,17 +30,17 @@ class ActorRequest extends Request
     /**
      * @throws \JsonException
      */
-    public function createDtoFromResponse($response): Actor|Collection|null
+    public function createDtoFromResponse($response): ActorSingle|Collection|null
     {
         if ($this->jsonResultKey) {
             if ($response->json('total_results') === 0) {
                 return null;
             }
 
-            return Actor::createActorObject(collect($response->json($this->jsonResultKey)));
+            return ActorSingle::createActorObject(collect($response->json($this->jsonResultKey)));
         }
 
-        return Actor::createActorObject($response->json());
+        return ActorSingle::createActorObject($response->json());
     }
 
 }

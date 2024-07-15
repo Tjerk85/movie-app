@@ -3,10 +3,9 @@
 namespace App\Services;
 
 use App\Http\Integrations\TheMovieDb\EndPoints;
-use App\Http\Integrations\TheMovieDb\Requests\ActorRequest;
+use App\Http\Integrations\TheMovieDb\Requests\Actors\ActorRequest;
 use App\Http\Integrations\TheMovieDb\Requests\Movies\GeneralMovieRequest;
 use App\Http\Integrations\TheMovieDb\TheMovieDbConnector;
-
 use function PHPUnit\Framework\isEmpty;
 
 class MovieService
@@ -90,7 +89,7 @@ class MovieService
         return $this->connector
             ->send(new ActorRequest(
                 $this->endPoints
-                    ->set($this->endPoints::$ACTORREQUEST, $id)
+                    ->set($this->endPoints::$ACTORSMOVIEREQUEST, $id)
                     ->getEndPoint(),
                 'cast'
             ))
