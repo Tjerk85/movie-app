@@ -4,7 +4,10 @@ namespace App\Services;
 
 use App\Http\Integrations\TheMovieDb\EndPoints;
 use App\Http\Integrations\TheMovieDb\Requests\Actors\ActorSingleRequest;
+use App\Http\Integrations\TheMovieDb\Requests\Movies\GeneralMovieRequest;
 use App\Http\Integrations\TheMovieDb\TheMovieDbConnector;
+use App\Models\Movie;
+use App\Models\TvShow;
 
 class ActorService
 {
@@ -27,5 +30,19 @@ class ActorService
                     ->getEndPoint()
             ))
             ->dto();
+    }
+
+    public function getMoviesRelatedToActor($movieCredits)
+    {
+        return Movie::createMovieObject(collect($movieCredits))
+            ->sortBy('vote_average')
+            ->reverse();
+    }
+
+    public function getTvShowRelatedToActor($tvShowCredits)
+    {
+        return TvShow::createTvShowObject(collect($tvShowCredits))
+            ->sortBy('vote_average')
+            ->reverse();
     }
 }

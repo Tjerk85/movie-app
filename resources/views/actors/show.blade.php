@@ -6,6 +6,7 @@
                 :actor="$actor"
                 :imageSize="500"
                 :link="false"
+                :textSize="'text-4xl'"
             >
                 <p class="content-center"><span class="font-bold">Birthday: </span>
                     {{ $actor->birthday }}
@@ -30,5 +31,17 @@
             <p class="content-center ml-10 max-w-[800px]">{{ $actor->biography }}</p>
         </div>
     </div>
+
+    <x-moviesIndex
+        :movies="$moviesRelatedToActor"
+        :link="true"
+        :title="'Played in movies:'"
+    />
+
+    <x-tvShowIndex
+        :tvShows="$tvShowRelatedToActor"
+        :link="true"
+        :title="'Played in tv shows:'"
+    />
 
 @endsection

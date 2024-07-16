@@ -1,7 +1,7 @@
-@props(['actor' => null, 'link', 'imageSize'])
+@props(['actor' => null, 'link', 'imageSize', 'textSize' => 'text-xs'])
 
 <div class="mb-10 mt-10 flex flex-col max-w-[{{$imageSize}}px]">
-    <p class="font-bold text-xs h-12">{{ $actor->name }}</p>
+    <p class="font-bold {{ $textSize }} h-12">{{ $actor->name }}</p>
     @if($link)
         <a href="{{ route('showActor', ['id' => $actor->id]) }}">
             <img

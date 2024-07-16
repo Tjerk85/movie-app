@@ -3,6 +3,7 @@
 namespace App\Http\Integrations\TheMovieDb\Requests\Movies;
 
 use App\Models\Movie;
+use App\Models\TvShow;
 use Illuminate\Support\Collection;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;

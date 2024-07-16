@@ -1,10 +1,9 @@
 @extends('layouts.main')
 @section('content')
-    <img
-        class="opacity-60 absolute w-full"
-        src="https://image.tmdb.org/t/p/w500{{ $movie->backdrop_path }}"
-        alt=""
-    >
+    <div class="absolute bg-gray-600 bg-gradient-to-b from-transparent to-gray-950 w-full">
+        <img src="https://image.tmdb.org/t/p/w500{{ $movie->backdrop_path }}" alt="Your Image"
+             class="object-cover mix-blend-overlay opacity-70 w-full">
+    </div>
     <div class="z-10 opacity-75 mr-20">
         <div class="flex ml-20 mt-20">
             <x-movie

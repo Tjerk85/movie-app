@@ -1,8 +1,7 @@
 @props(['movie' => null, 'link', 'imageSize', 'genres' => null])
 
 <div class="mb-10 mt-10 flex flex-col ml-5 space-y-8">
-
-    <p class="font-bold h-12">{{ $movie->title }}</p>
+    <p class="font-bold h-12 max-w-[200px]">{{ $movie->title }}</p>
     @if($link)
         <a href="{{ route('showMovie', ['movieId' => $movie->id]) }}">
             <img

@@ -38,6 +38,8 @@ readonly class ActorSingle
         public string      $place_of_birth,
         public float       $popularity,
         public string      $profile_path,
+        public array       $movie_credits,
+        public array       $tv_credits,
     )
     {
     }
@@ -71,6 +73,8 @@ readonly class ActorSingle
             $object['place_of_birth'],
             $object['popularity'],
             $object['profile_path'],
+            $object['movie_credits']['cast'],
+            $object['tv_credits']['cast'],
         );
     }
 }

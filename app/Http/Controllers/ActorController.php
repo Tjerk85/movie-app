@@ -28,7 +28,9 @@ class ActorController extends Controller
     public function showActor($id)
     {
         return view('actors.show', [
-            'actor' => $this->actorService->getActor($id),
+            'actor' => $actor = $this->actorService->getActor($id),
+            'moviesRelatedToActor' => $this->actorService->getMoviesRelatedToActor($actor->movie_credits),
+            'tvShowRelatedToActor' => $this->actorService->getTvShowRelatedToActor($actor->tv_credits),
         ]);
     }
 }
