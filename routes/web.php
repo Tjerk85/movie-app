@@ -20,3 +20,4 @@ Route::get('/tv/top-rated', [TvShowController::class, 'topRatedTvShows'])->name(
 
 // Actor
 Route::get('/actors/actor/{id}', [\App\Http\Controllers\ActorController::class, 'showActor'])->name('showActor');
+Route::get('/actors', [\App\Http\Controllers\ActorController::class, 'index'])->name('actors');

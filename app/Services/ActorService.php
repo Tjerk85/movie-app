@@ -64,4 +64,14 @@ class ActorService
         return is_null($results) ? null : $results->take($limit);
     }
 
+    public function getPopularActors()
+    {
+        return $this->connector
+            ->send(new ActorRequest(
+                $this->endPoints
+                    ->set($this->endPoints::$POPULARACTORREQUEST)
+                    ->getEndPoint(),
+                'results'
+            ))->dto();
+    }
 }

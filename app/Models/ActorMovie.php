@@ -17,23 +17,23 @@ readonly class ActorMovie
      * @param float $popularity
      * @param ?string $profile_path
      * @param int|null $cast_id
-     * @param string $character
-     * @param string $credit_id
-     * @param int $order
+     * @param string|null $character
+     * @param string|null $credit_id
+     * @param int|null $order
      */
     public function __construct(
-        public bool     $adult,
-        public int      $gender,
-        public int      $id,
-        public string   $known_for_department,
-        public string   $name,
-        public string   $original_name,
-        public float    $popularity,
-        public ?string  $profile_path,
-        public int|null $cast_id,
-        public string   $character,
-        public string   $credit_id,
-        public int      $order,
+        public bool        $adult,
+        public int         $gender,
+        public int         $id,
+        public string      $known_for_department,
+        public string      $name,
+        public string      $original_name,
+        public float       $popularity,
+        public ?string     $profile_path,
+        public int|null    $cast_id,
+        public string|null $character,
+        public string|null $credit_id,
+        public int|null    $order,
     )
     {
     }
@@ -62,9 +62,9 @@ readonly class ActorMovie
             $object['popularity'],
             $object['profile_path'],
             $object['cast_id'] ?? null,
-            $object['character'],
-            $object['credit_id'],
-            $object['order']
+            $object['character'] ?? null,
+            $object['credit_id'] ?? null,
+            $object['order'] ?? null
         );
     }
 }

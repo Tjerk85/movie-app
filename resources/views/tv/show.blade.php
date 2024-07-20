@@ -27,6 +27,8 @@
         <x-actorsIndex
             :actors="$actors"
             :title="'Actors:'"
+            :maxContainerSize="500"
+            :gridCols="5"
         />
     </div>
 
