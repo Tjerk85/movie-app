@@ -22,6 +22,8 @@ class ActorController extends Controller
     {
         return view('actors.index', [
             'popularActors' => $this->actorService->getPopularActors(),
+            'trendingActors' => $this->actorService->getTrendingActors('day'),
+            'itemsToShow' => 12
         ]);
     }
 

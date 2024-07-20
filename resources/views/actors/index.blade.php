@@ -3,7 +3,14 @@
     <x-actorsIndex
         :actors="$popularActors"
         :title="'Popular Actors'"
-        :itemsToShow="8"
+        :itemsToShow="$itemsToShow"
+        :maxContainerSize="1000"
+    />
+
+    <x-actorsIndex
+        :actors="$trendingActors"
+        :title="'Trending Actors'"
+        :itemsToShow="$itemsToShow"
         :maxContainerSize="1000"
     />
 @endsection

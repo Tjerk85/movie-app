@@ -74,4 +74,15 @@ class ActorService
                 'results'
             ))->dto();
     }
+
+    public function getTrendingActors($when = 'day')
+    {
+        return $this->connector
+            ->send(new ActorRequest(
+                $this->endPoints
+                    ->set($this->endPoints::$TRENDINGACTORREQUEST, $when)
+                    ->getEndPoint(),
+                'results'
+            ))->dto();
+    }
 }

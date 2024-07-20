@@ -38,6 +38,9 @@ class EndPoints
 
     public static $POPULARACTORREQUEST = '/person/popular';
 
+    /* {$param} is day ore week */
+    public static $TRENDINGACTORREQUEST = '/trending/person/{$param}';
+
     public static $ACTORRELATEDTOMOVIEREQUEST = '/find/{$param}?external_source=imdb_id';
 
     private string $endPoint;
