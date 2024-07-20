@@ -36,7 +36,7 @@ readonly class Movie
      */
     public static function createMovieObject($response): Movie|Collection
     {
-        if (! is_array($response) && $response->count() > 1) {
+        if (! is_array($response) && $response->count() > 1 || $response instanceof Collection) {
             return $response->map(fn ($movie) => self::mapObject($movie));
         }
 

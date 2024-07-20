@@ -36,7 +36,7 @@ readonly class TvShow
      */
     public static function createTvShowObject($response): TvShow|Collection
     {
-        if (! is_array($response) && $response->count() > 1) {
+        if (! is_array($response) && $response->count() > 1 || $response instanceof Collection) {
             return $response->map(fn ($tv) => self::mapObject($tv));
         }
 

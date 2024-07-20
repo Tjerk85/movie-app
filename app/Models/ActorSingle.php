@@ -11,33 +11,33 @@ readonly class ActorSingle
      * @param bool $adult
      * @param array $also_known_as
      * @param string $biography
-     * @param string $birthday
+     * @param string|null $birthday
      * @param string|null $deathday
      * @param int $gender
      * @param string $homepage
      * @param int $id
-     * @param string $imdb_id
+     * @param string|null $imdb_id
      * @param string $known_for_department
      * @param string $name
-     * @param string $place_of_birth
+     * @param string|null $place_of_birth
      * @param float $popularity
-     * @param string $profile_path
+     * @param string|null $profile_path
      */
     public function __construct(
         public bool        $adult,
         public array       $also_known_as,
         public string      $biography,
-        public string      $birthday,
+        public string|null $birthday,
         public string|null $deathday,
         public int         $gender,
         public string|null $homepage,
         public int         $id,
-        public string      $imdb_id,
+        public string|null $imdb_id,
         public string      $known_for_department,
         public string      $name,
-        public string      $place_of_birth,
+        public string|null $place_of_birth,
         public float       $popularity,
-        public string      $profile_path,
+        public string|null $profile_path,
         public array       $movie_credits,
         public array       $tv_credits,
     )

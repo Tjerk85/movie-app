@@ -32,6 +32,8 @@ class EndPoints
 
     public static $ACTORSMOVIEREQUEST = '/movie/{$param}/credits';
 
+    public static $ACTORSRELATEDTOTVSHOWREQUEST = '/tv/{$param}/credits';
+
     public static $ACTORREQUEST = '/person/{$param}?append_to_response=images,movie_credits,tv_credits';
 
     public static $ACTORRELATEDTOMOVIEREQUEST = '/find/{$param}?external_source=imdb_id';

@@ -23,6 +23,11 @@
             </x-tvShow>
             <p class="content-center ml-10">{{ $tvShow->overview }}</p>
         </div>
+
+        <x-actorsIndex
+            :actors="$actors"
+            :title="'Actors:'"
+        />
     </div>
 
     <x-tvShowIndex

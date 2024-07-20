@@ -16,24 +16,24 @@ readonly class ActorMovie
      * @param string $original_name
      * @param float $popularity
      * @param ?string $profile_path
-     * @param int $cast_id
+     * @param int|null $cast_id
      * @param string $character
      * @param string $credit_id
      * @param int $order
      */
     public function __construct(
-        public bool    $adult,
-        public int     $gender,
-        public int     $id,
-        public string  $known_for_department,
-        public string  $name,
-        public string  $original_name,
-        public float   $popularity,
-        public ?string $profile_path,
-        public int     $cast_id,
-        public string  $character,
-        public string  $credit_id,
-        public int     $order,
+        public bool     $adult,
+        public int      $gender,
+        public int      $id,
+        public string   $known_for_department,
+        public string   $name,
+        public string   $original_name,
+        public float    $popularity,
+        public ?string  $profile_path,
+        public int|null $cast_id,
+        public string   $character,
+        public string   $credit_id,
+        public int      $order,
     )
     {
     }
@@ -43,7 +43,7 @@ readonly class ActorMovie
      */
     public static function createActorObject($response): ActorMovie|Collection
     {
-        if (!is_array($response) && $response->count() > 1) {
+        if (!is_array($response) && $response->count() > 1 || $response instanceof Collection) {
             return $response->map(fn($movie) => self::mapObject($movie));
         }
 
@@ -61,7 +61,7 @@ readonly class ActorMovie
             $object['original_name'],
             $object['popularity'],
             $object['profile_path'],
-            $object['cast_id'],
+            $object['cast_id'] ?? null,
             $object['character'],
             $object['credit_id'],
             $object['order']

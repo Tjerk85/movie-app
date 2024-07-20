@@ -3,8 +3,8 @@
 namespace App\Services;
 
 use App\Http\Integrations\TheMovieDb\EndPoints;
+use App\Http\Integrations\TheMovieDb\Requests\Actors\ActorRequest;
 use App\Http\Integrations\TheMovieDb\Requests\Actors\ActorSingleRequest;
-use App\Http\Integrations\TheMovieDb\Requests\Movies\GeneralMovieRequest;
 use App\Http\Integrations\TheMovieDb\TheMovieDbConnector;
 use App\Models\Movie;
 use App\Models\TvShow;
@@ -45,4 +45,23 @@ class ActorService
             ->sortBy('vote_average')
             ->reverse();
     }
+
+    public function getActorRelatedToTvShow($id, $limit = null)
+    {
+        $results = $this->connector
+            ->send(new ActorRequest(
+                $this->endPoints
+                    ->set($this->endPoints::$ACTORSRELATEDTOTVSHOWREQUEST, $id)
+                    ->getEndPoint(),
+                'cast'
+            ))
+            ->dto();
+
+        if ($results instanceof \App\Models\ActorMovie) {
+            return $results;
+        }
+
+        return is_null($results) ? null : $results->take($limit);
+    }
+
 }
