@@ -18,12 +18,15 @@ class ActorController extends Controller
         $this->actorService = new ActorService();
     }
 
-    public function index()
+    public function index(Request $request)
     {
+        $limit = 12;
+        $when = $request->input('trending') ?? 'day';
+
         return view('actors.index', [
-            'popularActors' => $this->actorService->getPopularActors(),
-            'trendingActors' => $this->actorService->getTrendingActors('day'),
-            'itemsToShow' => 12
+            'trendingActors' => $this->actorService->getTrendingActors($when, $limit),
+            'popularActors' => $this->actorService->getPopularActors($limit),
+            'itemsToShow' => $limit
         ]);
     }
 

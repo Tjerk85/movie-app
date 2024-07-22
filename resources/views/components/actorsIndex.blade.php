@@ -3,6 +3,7 @@
 <div class="flex z-10 flex-col items-center mt-5">
     <div class="max-w-[{{ $maxContainerSize }}px]">
         <h1 class="ml-5 mb-5 text-2xl">{{ $title }}</h1>
+        {{$slot}}
         <div class="grid grid-cols-{{$gridCols}} gap-1 justify-center">
 
             @if(!empty($actors) && $actors instanceof \Illuminate\Support\Collection)

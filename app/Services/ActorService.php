@@ -64,7 +64,7 @@ class ActorService
         return is_null($results) ? null : $results->take($limit);
     }
 
-    public function getPopularActors()
+    public function getPopularActors($limit = 12)
     {
         return $this->connector
             ->send(new ActorRequest(
@@ -72,10 +72,11 @@ class ActorService
                     ->set($this->endPoints::$POPULARACTORREQUEST)
                     ->getEndPoint(),
                 'results'
-            ))->dto();
+            ))->dto()
+            ->take($limit);
     }
 
-    public function getTrendingActors($when = 'day')
+    public function getTrendingActors($when = 'day', $limit = 12)
     {
         return $this->connector
             ->send(new ActorRequest(
@@ -83,6 +84,7 @@ class ActorService
                     ->set($this->endPoints::$TRENDINGACTORREQUEST, $when)
                     ->getEndPoint(),
                 'results'
-            ))->dto();
+            ))->dto()
+            ->take($limit);
     }
 }
