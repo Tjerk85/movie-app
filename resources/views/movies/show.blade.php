@@ -5,7 +5,7 @@
              class="object-cover mix-blend-overlay opacity-70 w-full">
     </div>
     <div class="z-10 opacity-75 mr-20">
-        <div class="flex ml-20 mt-20">
+        <div class="flex sm:flex-row flex-col ml-20 mt-20">
             <x-movie
                 :movie="$movie"
                 :imageSize="500"
@@ -21,7 +21,7 @@
                 @endif
 
             </x-movie>
-            <p class="content-center ml-10">{{ $movie->overview }}</p>
+            <p class="content-center m-auto ml-10">{{ $movie->overview }}</p>
         </div>
 
         <x-actorsIndex

@@ -5,8 +5,8 @@
              class="object-cover mix-blend-overlay opacity-70 w-full">
     </div>
     <div class="z-10 opacity-75 mr-20">
-        <div class="flex ml-20 mt-20">
-            <x-tvShow
+        <div class="flex sm:flex-row flex-col ml-20 mt-20">
+        <x-tvShow
                 :tvShow="$tvShow"
                 :imageSize="500"
                 :link="false"
@@ -21,7 +21,7 @@
                 @endif
 
             </x-tvShow>
-            <p class="content-center ml-10">{{ $tvShow->overview }}</p>
+            <p class="content-center m-auto ml-0 md:ml-10">{{ $tvShow->overview }}</p>
         </div>
 
         <x-actorsIndex
