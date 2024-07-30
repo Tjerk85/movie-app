@@ -8,7 +8,7 @@ class EndPoints
 
     public static $SIMILARMOVIEREQUEST = '/movie/{$param}/similar?language=en-US&page=1';
 
-    public static $POPULARMOVIEREQUEST = '/movie/popular?language=en-US&page=1';
+    public static $POPULARMOVIEREQUEST = '/movie/popular?language=en-US&page={$page}';
 
     public static $TOPRATEDMOVIEREQUEST = '/movie/top_rated?language=en-US';
 
@@ -46,13 +46,27 @@ class EndPoints
     private string $endPoint;
 
     private string $param;
+    /**
+     * @var int|mixed
+     */
+    private mixed $page;
 
     public function __construct() {}
 
-    public function set($endPoint, $param = '')
+    public function set($endPoint, $param = '', $page = 1)
     {
         $this->endPoint = $endPoint;
         $this->param = $param;
+        $this->page = $page;
+
+        return $this;
+    }
+
+    public function getPage()
+    {
+        $this->endPoint = isset($this->page)
+            ? str_replace('{$page}', $this->page, $this->endPoint)
+            : $this->page;
 
         return $this;
     }
