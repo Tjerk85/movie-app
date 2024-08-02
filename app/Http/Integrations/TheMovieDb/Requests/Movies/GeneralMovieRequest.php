@@ -7,8 +7,9 @@ use App\Models\TvShow;
 use Illuminate\Support\Collection;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
+use Saloon\PaginationPlugin\Contracts\Paginatable;
 
-class GeneralMovieRequest extends Request
+class GeneralMovieRequest extends Request implements Paginatable
 {
     /**
      * The HTTP method of the request
@@ -38,7 +39,7 @@ class GeneralMovieRequest extends Request
                 return null;
             }
 
-            return Movie::createMovieObject(collect($response->json($this->jsonResultKey)));
+            return Movie::createMovieObject($response->collect($this->jsonResultKey));
         }
 
         return Movie::createMovieObject($response->json());

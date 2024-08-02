@@ -8,7 +8,7 @@ class EndPoints
 
     public static $SIMILARMOVIEREQUEST = '/movie/{$param}/similar?language=en-US&page=1';
 
-    public static $POPULARMOVIEREQUEST = '/movie/popular?language=en-US&page={$page}';
+    public static $POPULARMOVIEREQUEST = '/movie/popular?language=en-US';
 
     public static $TOPRATEDMOVIEREQUEST = '/movie/top_rated?language=en-US';
 

@@ -6,6 +6,8 @@ use App\Http\Integrations\TheMovieDb\EndPoints;
 use App\Http\Integrations\TheMovieDb\Requests\Actors\ActorRequest;
 use App\Http\Integrations\TheMovieDb\Requests\Movies\GeneralMovieRequest;
 use App\Http\Integrations\TheMovieDb\TheMovieDbConnector;
+use Illuminate\Support\Collection;
+use Saloon\PaginationPlugin\PagedPaginator;
 use function PHPUnit\Framework\isEmpty;
 
 class MovieService
@@ -46,17 +48,26 @@ class MovieService
             ->take($limit);
     }
 
-    public function getPopular($limit = null)
+    public function getPopular($limit = 1, $page = 1)
     {
-        return $this->connector
-            ->send(new GeneralMovieRequest(
+        $results = $this->connector
+            ->paginate(new GeneralMovieRequest(
                 $this->endPoints
-                    ->set($this->endPoints::$POPULARMOVIEREQUEST)
+                    ->set($this->endPoints::$POPULARMOVIEREQUEST, '')
+                    ->getPage()
                     ->getEndPoint(),
                 'results'
-            ))
-            ->dto()
-            ->take($limit);
+            ));
+
+        return [
+            'movies' => $results
+                ->setStartPage($page)
+                ->collect(false)
+                ->take($limit)
+                ->first()
+                ->dto(),
+            'paginator' => $this->getPagination($results, $page),
+        ];
     }
 
     public function getSimilar($id)
@@ -95,5 +106,14 @@ class MovieService
             ))
             ->dto()
             ->take($limit);
+    }
+
+    public function getPagination(PagedPaginator $results, $page): array
+    {
+        $currentPage = $results->getCurrentPage() + 1;
+        return [
+            'previousPage' => $currentPage > 1 ? $currentPage - 1 : null,
+            'nextPage' => $currentPage === 1 || !($page >= 500) ? $currentPage + 1 : null,
+        ];
     }
 }

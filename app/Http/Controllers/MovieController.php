@@ -29,7 +29,7 @@ class MovieController extends Controller
 
         return view('movies.index', [
             'trendingMovies' => $this->movieService->getTrending($when, $limit),
-            'popularMovies' => $this->movieService->getPopular($limit),
+            'popularMovies' => $this->movieService->getPopular($limit)['movies']->take($limit),
             'topRatedMovies' => $this->movieService->getTopRated($limit),
         ]);
     }
@@ -77,8 +77,12 @@ class MovieController extends Controller
      */
     public function popularMovies()
     {
+        $page = request()->query->get('page', 1);
+        $request = $this->movieService->getPopular(1, $page);
+
         return view('movies.movies', [
-            'movies' => $this->movieService->getPopular(),
+            'movies' => $request['movies'],
+            'paginator' => $request['paginator'],
             'title' => 'Popular Movies',
         ]);
     }
