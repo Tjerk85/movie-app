@@ -5,7 +5,7 @@
     @if($link)
         <a href="{{ route('showMovie', ['movieId' => $movie->id]) }}">
             <img
-                src="https://image.tmdb.org/t/p/w{{ $imageSize }}/{{ $movie->poster_path }}"
+                src=@if($movie->poster_path) "https://image.tmdb.org/t/p/w{{ $imageSize }}/{{ $movie->poster_path }} @else {{ url($movie->poster_unknown) }} @endif"
                 alt="{{ $movie->title }}"
             >
         </a>

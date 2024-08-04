@@ -16,6 +16,7 @@ readonly class ActorMovie
      * @param string $original_name
      * @param float $popularity
      * @param ?string $profile_path
+     * @param ?string $profile_path_unknown
      * @param int|null $cast_id
      * @param string|null $character
      * @param string|null $credit_id
@@ -30,6 +31,7 @@ readonly class ActorMovie
         public string      $original_name,
         public float       $popularity,
         public ?string     $profile_path,
+        public ?string     $profile_path_unknown,
         public int|null    $cast_id,
         public string|null $character,
         public string|null $credit_id,
@@ -61,7 +63,8 @@ readonly class ActorMovie
             $object['original_name'],
             $object['popularity'],
             $object['profile_path'],
-            $object['cast_id'] ?? null,
+            $object['profile_path_unknown'] = 'images/Unknown_person.jpg',
+                $object['cast_id'] ?? null,
             $object['character'] ?? null,
             $object['credit_id'] ?? null,
             $object['order'] ?? null

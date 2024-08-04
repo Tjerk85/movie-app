@@ -17,6 +17,7 @@ readonly class Movie
         public string $title,
         public string $overview,
         public ?string $poster_path,
+        public ?string $poster_unknown,
         public float $vote_average,
         public string $release_date,
         public Collection|array $genre_ids,
@@ -54,6 +55,7 @@ readonly class Movie
             $object['title'],
             $object['overview'],
             $object['poster_path'],
+            $object['poster_unknown'] = 'images/Unknown_movie.png',
             $object['vote_average'],
             $object['release_date'],
             isset($object['genre_ids'])

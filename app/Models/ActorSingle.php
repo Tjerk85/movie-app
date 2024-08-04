@@ -38,6 +38,7 @@ readonly class ActorSingle
         public string|null $place_of_birth,
         public float       $popularity,
         public string|null $profile_path,
+        public string      $profile_path_unknown,
         public array       $movie_credits,
         public array       $tv_credits,
     )
@@ -73,6 +74,7 @@ readonly class ActorSingle
             $object['place_of_birth'],
             $object['popularity'],
             $object['profile_path'],
+            $object['profile_path_unknown'] = 'images/Unknown_person.jpg',
             $object['movie_credits']['cast'],
             $object['tv_credits']['cast'],
         );
