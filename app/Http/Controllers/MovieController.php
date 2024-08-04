@@ -13,10 +13,13 @@ class MovieController extends Controller
 
     private MovieService $movieService;
 
+    private mixed $page;
+
     public function __construct()
     {
         $this->connector = new TheMovieDbConnector();
         $this->movieService = new MovieService();
+        $this->page = request()->query->get('page', 1);
     }
 
     /**
@@ -28,7 +31,7 @@ class MovieController extends Controller
         $when = $request->input('trending') ?? 'day';
 
         return view('movies.index', [
-            'trendingMovies' => $this->movieService->getTrending($when, $limit),
+            'trendingMovies' => $this->movieService->getTrending($when, $limit)['movies']->take($limit),
             'popularMovies' => $this->movieService->getPopular($limit)['movies']->take($limit),
             'topRatedMovies' => $this->movieService->getTopRated($limit),
         ]);
@@ -66,8 +69,11 @@ class MovieController extends Controller
      */
     public function trendingMovies(string $when = 'day')
     {
+        $request = $this->movieService->getTrending($when, 1, $this->page);
+
         return view('movies.trending', [
-            'movies' => $this->movieService->getTrending($when),
+            'movies' => $request['movies'],
+            'paginator' => $request['paginator'],
             'title' => 'Trending Movies',
         ]);
     }
@@ -77,8 +83,7 @@ class MovieController extends Controller
      */
     public function popularMovies()
     {
-        $page = request()->query->get('page', 1);
-        $request = $this->movieService->getPopular(1, $page);
+        $request = $this->movieService->getPopular(1, $this->page);
 
         return view('movies.movies', [
             'movies' => $request['movies'],

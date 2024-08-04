@@ -22,17 +22,25 @@ class MovieService
         $this->connector = new TheMovieDbConnector();
     }
 
-    public function getTrending(string $when, $limit = null)
+    public function getTrending(string $when, $limit = null, $page = 1)
     {
-        return $this->connector
-            ->send(new GeneralMovieRequest(
+        $results = $this->connector
+            ->paginate(new GeneralMovieRequest(
                 $this->endPoints
                     ->set($this->endPoints::$TRENDINGMOVIEREQUEST, $when)
                     ->getEndPoint(),
                 'results'
-            ))
-            ->dto()
-            ->take($limit);
+            ));
+
+        return [
+            'movies' => $results
+                ->setStartPage($page)
+                ->collect(false)
+                ->take($limit)
+                ->first()
+                ->dto(),
+            'paginator' => $this->getPagination($results, $page),
+        ];
     }
 
     public function getTopRated($limit = null)

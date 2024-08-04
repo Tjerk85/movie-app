@@ -8,6 +8,7 @@
                 <a href="{{ route('trendingMovies') }}/day">Day</a> |
                 <a href="{{ route('trendingMovies') }}/week">Week</a>
             </div>
+            <x-paginator :paginator="$paginator" :route="'trendingMovies'"/>
             <div class="grid grid-cols-4 justify-center">
                 @foreach($movies as $movie)
                     <x-movie
