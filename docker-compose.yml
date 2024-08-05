@@ -1,5 +1,3 @@
-version: "3.8"
-
 services:
     php:
         container_name: php-fpm
@@ -17,51 +15,47 @@ services:
             - "5173:5173"
         networks:
             - traefik_network
+            - caddy_network
         volumes:
             - ./:/var/www/html:cached
             - ./node_modules:/var/www/html/node_modules:delegated
             - ./public:/var/www/html/public:delegated
 
-    nginx:
-        container_name: movie-nginx
-        image: nginx
-        environment:
-            NGINX_STATIC_OPEN_FILE_CACHE: "off"
-            NGINX_ERROR_LOG_LEVEL: debug
-            NGINX_BACKEND_HOST: php
-            NGINX_VHOST_PRESET: php
-            NGINX_SERVER_ROOT: /var/www/html/public
-        volumes:
-            - ./docker/nginx:/etc/nginx/conf.d/
-            - ./public:/var/www/html/public:delegated
-            - ./storage/app/public:/var/www/html/storage/app/public:delegated
-        networks:
-            - traefik_network
-        labels:
-            - "traefik.enable=true"
-            - "traefik.http.routers.movie-app.tls=false"
-            - "traefik.http.routers.movie-app.rule=Host(`movie-app.localhost`)"
-
-    mysql:
-        container_name: movie-mysql
-        image: mysql
-        volumes:
-            - ./docker/mysql:/var/lib/mysql:rw
-        environment:
-            MYSQL_DATABASE: db
-            MYSQL_ROOT_PASSWORD: root
-            MYSQL_USER: db
-            MYSQL_PASSWORD: db
-        ports:
-            -   '34000:3306'
-        networks:
-            - traefik_network
-
-#    redis:
-#        image: redis:4-alpine
-#        container_name: movie-redis
+#    nginx:
+#        container_name: movie-nginx
+#        image: nginx
+#        environment:
+#            NGINX_STATIC_OPEN_FILE_CACHE: "off"
+#            NGINX_ERROR_LOG_LEVEL: debug
+#            NGINX_BACKEND_HOST: php
+#            NGINX_VHOST_PRESET: php
+#            NGINX_SERVER_ROOT: /var/www/html/public
 #        volumes:
-#          - redis:/data
+#            - ./docker/nginx:/etc/nginx/conf.d/
+#            - ./public:/var/www/html/public:delegated
+#            - ./storage/app/public:/var/www/html/storage/app/public:delegated
+#        networks:
+#            - traefik_network
+#        labels:
+#            - "traefik.enable=true"
+#            - "traefik.http.routers.movie-app.tls=false"
+#            - "traefik.http.routers.movie-app.rule=Host(`movie-app.localhost`)"
+
+#    mysql:
+#        container_name: movie-mysql
+#        image: mysql
+#        volumes:
+#            - ./docker/mysql:/var/lib/mysql:rw
+#        environment:
+#            MYSQL_DATABASE: db
+#            MYSQL_ROOT_PASSWORD: root
+#            MYSQL_USER: db
+#            MYSQL_PASSWORD: db
+#        ports:
+#            -   '34000:3306'
+#        networks:
+#            - traefik_network
+
 
 #  mailhog:
 #    image: mailhog/mailhog
@@ -81,8 +75,8 @@ services:
 #    redis:
 #        driver: local
 
-# Make the externally created network "traefik-gateway" available as network "default"
-# docker network create traefik-gateway
 networks:
     traefik_network:
+        external: true
+    caddy_network:
         external: true
