@@ -40,19 +40,19 @@ services:
 #            - "traefik.http.routers.movie-app.tls=false"
 #            - "traefik.http.routers.movie-app.rule=Host(`movie-app.localhost`)"
 
-    mysql-movie:
-        image: mysql
-        volumes:
-            - ./docker/mysql:/var/lib/mysql:rw
-        environment:
-            MYSQL_DATABASE: db
-            MYSQL_ROOT_PASSWORD: root
-            MYSQL_USER: db
-            MYSQL_PASSWORD: db
-        ports:
-            -   '34000:3306'
-        networks:
-            - caddy_network
+#    mysql-movie:
+#        image: mysql
+#        volumes:
+#            - ./docker/mysql:/var/lib/mysql:rw
+#        environment:
+#            MYSQL_DATABASE: db
+#            MYSQL_ROOT_PASSWORD: root
+#            MYSQL_USER: db
+#            MYSQL_PASSWORD: db
+#        ports:
+#            -   '34000:3306'
+#        networks:
+#            - caddy_network
 
 #  mailhog:
 #    image: mailhog/mailhog
