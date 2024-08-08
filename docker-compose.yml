@@ -5,8 +5,8 @@ services:
             context: ./
             dockerfile: "./docker/php/Dockerfile"
             args:
-                - BUILD_UID=${DOCKER_UID}
-                - BUILD_GID=${DOCKER_GID}
+                user: sammy
+                uid: 1000
         environment:
             XDEBUG_CONFIG: "remote_host={{127.0.0.1}}"
             PHP_IDE_CONFIG: "serverName=host.docker.internal"
@@ -14,7 +14,6 @@ services:
         ports:
             - "5173:5173"
         networks:
-            - traefik_network
             - caddy_network
         volumes:
             - ./:/var/www/html:cached
@@ -41,21 +40,19 @@ services:
 #            - "traefik.http.routers.movie-app.tls=false"
 #            - "traefik.http.routers.movie-app.rule=Host(`movie-app.localhost`)"
 
-#    mysql:
-#        container_name: movie-mysql
-#        image: mysql
-#        volumes:
-#            - ./docker/mysql:/var/lib/mysql:rw
-#        environment:
-#            MYSQL_DATABASE: db
-#            MYSQL_ROOT_PASSWORD: root
-#            MYSQL_USER: db
-#            MYSQL_PASSWORD: db
-#        ports:
-#            -   '34000:3306'
-#        networks:
-#            - traefik_network
-
+    mysql-movie:
+        image: mysql
+        volumes:
+            - ./docker/mysql:/var/lib/mysql:rw
+        environment:
+            MYSQL_DATABASE: db
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_USER: db
+            MYSQL_PASSWORD: db
+        ports:
+            -   '34000:3306'
+        networks:
+            - caddy_network
 
 #  mailhog:
 #    image: mailhog/mailhog
@@ -76,7 +73,5 @@ services:
 #        driver: local
 
 networks:
-    traefik_network:
-        external: true
     caddy_network:
         external: true
