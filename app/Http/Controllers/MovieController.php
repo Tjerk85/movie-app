@@ -43,8 +43,8 @@ class MovieController extends Controller
     public function showMovie(int $id)
     {
         return view('movies.show', [
-            'movie'             => $this->movieService->getMovie($id),
-            'similarMovies'     => $this->movieService->getSimilar($id),
+            'movie' => $this->movieService->getMovie($id),
+            'similarMovies' => $this->movieService->getSimilar($id),
             'servicesForMovies' => collect($this->connector
                 ->send(new ServicesToWatchRequest($id))
                 ->json('results')),
@@ -58,8 +58,11 @@ class MovieController extends Controller
      */
     public function topRatedMovies()
     {
+        $request = $this->movieService->getTopRated(1, $this->page);
+
         return view('movies.movies', [
-            'movies' => $this->movieService->getTopRated(),
+            'movies' => $request['movies'],
+            'paginator' => $request['paginator'],
             'title' => 'Top Rated Movies',
         ]);
     }

@@ -43,17 +43,26 @@ class MovieService
         ];
     }
 
-    public function getTopRated($limit = null)
+    public function getTopRated($limit = 1, $page = 1)
     {
-        return $this->connector
-            ->send(new GeneralMovieRequest(
+        $results = $this->connector
+            ->paginate(new GeneralMovieRequest(
                 $this->endPoints
                     ->set($this->endPoints::$TOPRATEDMOVIEREQUEST)
                     ->getEndPoint(),
                 'results'
-            ))
-            ->dto()
-            ->take($limit);
+            ));
+
+
+        return [
+            'movies' => $results
+                ->setStartPage($page)
+                ->collect(false)
+                ->take($limit)
+                ->first()
+                ->dto(),
+            'paginator' => $this->getPagination($results, $page),
+        ];
     }
 
     public function getPopular($limit = 1, $page = 1)
