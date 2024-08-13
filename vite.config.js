@@ -12,7 +12,14 @@ export default defineConfig({
         }),
     ],
     server: {
-        https: false,
+        host: '0.0.0.0',
+        hmr: {
+            host: 'movies.localhost',
+        },
+        https: {
+            key: '/var/www/html/docker/cert/movies.localhost.key',
+            cert: '/var/www/html/docker/cert/movies.localhost.crt',
+        },
         port: 5173,
     }
 });

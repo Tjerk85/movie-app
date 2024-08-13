@@ -17,6 +17,7 @@ services:
             - caddy_network
         volumes:
             - ./:/var/www/html:cached
+            - ../portainer/caddy_data/caddy/certificates/local/movies.localhost:/var/www/html/docker/cert
             - ./node_modules:/var/www/html/node_modules:delegated
             - ./public:/var/www/html/public:delegated
 
