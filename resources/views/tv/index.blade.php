@@ -1,13 +1,13 @@
 @extends('layouts.main')
 @section('content')
     <div class="flex flex-col items-center mt-5">
-        <div class="max-w-[1000px]">
+        <div class="md:max-w-[1000px] max-w-[300px]">
             <h1 class="ml-5 mb-5 text-2xl">Trending tv shows:</h1>
-            <div class="grid grid-cols-4 justify-center">
-                @foreach($onTheAirTvShows as $tvShow)
+            <div class="grid md:grid-cols-4 justify-center">
+            @foreach($onTheAirTvShows as $tvShow)
                     <x-tvShow
                         :tvShow="$tvShow"
-                        :imageSize="200"
+                        :imageSize="400"
                         :link="true"
                     />
                 @endforeach
@@ -15,11 +15,11 @@
             <x-arrow :title="'More on the air'" :route="route('onTheAirTvShows')"/>
 
             <h1 class="ml-5 mb-5 text-2xl">Popular tv shows:</h1>
-            <div class="grid grid-cols-4 justify-center">
+            <div class="grid md:grid-cols-4 justify-center">
                 @foreach($popularTvShows as $tvShow)
                     <x-tvShow
                         :tvShow="$tvShow"
-                        :imageSize="200"
+                        :imageSize="400"
                         :link="true"
                     />
                 @endforeach
@@ -27,11 +27,11 @@
             <x-arrow :title="'More popular'" :route="route('popularTvShows')"/>
 
             <h1 class="ml-5 mb-5 text-2xl">Top-Rated tv shows:</h1>
-            <div class="grid grid-cols-4 justify-center">
+            <div class="grid md:grid-cols-4 justify-center">
                 @foreach($topRatedTvShows as $tvShow)
                     <x-tvShow
                         :tvShow="$tvShow"
-                        :imageSize="200"
+                        :imageSize="400"
                         :link="true"
                     />
                 @endforeach

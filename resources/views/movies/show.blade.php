@@ -23,14 +23,14 @@
             </x-movie>
             <p class="content-center m-auto ml-10">{{ $movie->overview }}</p>
         </div>
-
-        <x-actorsIndex
-            :actors="$actors"
-            :title="'Actors:'"
-            :maxContainerSize="500"
-            :gridCols="5"
-        />
     </div>
+
+    <x-actorsIndex
+        :actors="$actors"
+        :title="'Actors:'"
+        :maxContainerSize="500"
+        :gridCols="'grid-cols-5'"
+    />
 
     <x-moviesIndex
         :movies="$similarMovies"

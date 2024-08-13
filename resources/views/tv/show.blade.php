@@ -23,14 +23,14 @@
             </x-tvShow>
             <p class="content-center m-auto ml-0 md:ml-10">{{ $tvShow->overview }}</p>
         </div>
-
-        <x-actorsIndex
-            :actors="$actors"
-            :title="'Actors:'"
-            :maxContainerSize="500"
-            :gridCols="5"
-        />
     </div>
+
+    <x-actorsIndex
+        :actors="$actors"
+        :title="'Actors:'"
+        :maxContainerSize="500"
+        :gridCols="'grid-cols-5'"
+    />
 
     <x-tvShowIndex
         :tvShows="$similarTvShows"

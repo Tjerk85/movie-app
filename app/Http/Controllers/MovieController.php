@@ -31,10 +31,11 @@ class MovieController extends Controller
         $when = $request->input('trending') ?? 'day';
 
         return view('movies.index', [
-            'trendingMovies' => $this->movieService->getTrending($when, $limit)['movies']->take($limit),
-            'popularMovies' => $this->movieService->getPopular($limit)['movies']->take($limit),
-            'topRatedMovies' => $this->movieService->getTopRated($limit),
-        ]);
+                'trendingMovies' => $this->movieService->getTrending($when, $limit)['movies']->take($limit),
+                'popularMovies' => $this->movieService->getPopular($limit)['movies']->take($limit),
+                'topRatedMovies' => $this->movieService->getTopRated($limit)['movies']->take($limit),
+            ]
+        );
     }
 
     /**

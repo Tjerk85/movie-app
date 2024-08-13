@@ -1,7 +1,7 @@
 @extends('layouts.main')
 @section('content')
-    <div class="z-10 opacity-75 mr-20">
-        <div class="flex ml-20 mt-20">
+    <div class="flex flex-col md:flex-row z-10 opacity-75 mr-20">
+        <div class="ml-20 md:mt-20">
             <x-actor
                 :actor="$actor"
                 :imageSize="500"
@@ -27,8 +27,10 @@
                     {{-- todo make request to: https://api.themoviedb.org/3/find/nm5896355?external_source=imdb_id --}}
                 </p>
             </x-actor>
-
-            <p class="content-center ml-10 max-w-[800px]">{{ $actor->biography }}</p>
+        </div>
+        <div class="content-center md:ml-10 ml-20 max-w-[800px] mb-10">
+            <p class="mb-2"><span class="font-bold">Biography:</span></p>
+            <p>{{ $actor->biography }}</p>
         </div>
     </div>
 
