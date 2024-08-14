@@ -7,6 +7,7 @@
                 :title="'Trending Actors'"
                 :itemsToShow="$itemsToShow"
                 :maxContainerSize="1000"
+                :gridCols="'md:grid-cols-4'"
             >
                 <div class="bg-gray-800 p-4 rounded mb-5">
                     <span class="font-bold">Trending this: </span>
@@ -19,6 +20,7 @@
                 :title="'Popular Actors'"
                 :itemsToShow="$itemsToShow"
                 :maxContainerSize="1000"
+                :gridCols="'md:grid-cols-4'"
             />
         </div>
     </div>
