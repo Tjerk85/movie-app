@@ -6,8 +6,9 @@ use App\Models\TvShow;
 use Illuminate\Support\Collection;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
+use Saloon\PaginationPlugin\Contracts\Paginatable;
 
-class GeneralTvShowRequest extends Request
+class GeneralTvShowRequest extends Request implements Paginatable
 {
     /**
      * The HTTP method of the request

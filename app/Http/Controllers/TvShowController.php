@@ -9,11 +9,16 @@ class TvShowController extends Controller
 {
     private TvShowService $tvShowService;
     private ActorService $actorService;
+    /**
+     * @var bool|float|int|mixed|string|null
+     */
+    private mixed $page;
 
     public function __construct()
     {
         $this->tvShowService = new TvShowService();
         $this->actorService = new ActorService();
+        $this->page = request()->query->get('page', 1);
     }
 
     /**
@@ -24,9 +29,9 @@ class TvShowController extends Controller
         $limit = 4;
 
         return view('tv.index', [
-            'popularTvShows' => $this->tvShowService->getPopular($limit),
-            'onTheAirTvShows' => $this->tvShowService->getOnTheAir($limit),
-            'topRatedTvShows' => $this->tvShowService->getTopRated($limit),
+            'popularTvShows' => $this->tvShowService->getPopular($limit)['tvShows']->take($limit),
+            'onTheAirTvShows' => $this->tvShowService->getOnTheAir($limit)['tvShows']->take($limit),
+            'topRatedTvShows' => $this->tvShowService->getTopRated($limit)['tvShows']->take($limit),
         ]);
     }
 
@@ -48,8 +53,11 @@ class TvShowController extends Controller
      */
     public function onTheAirTvShows()
     {
+        $request = $this->tvShowService->getOnTheAir(1, $this->page);
+
         return view('tv.tvShows', [
-            'tvShows' => $this->tvShowService->getTopRated(),
+            'tvShows' => $request['tvShows'],
+            'paginator' => $request['paginator'],
             'title' => 'Shows on the air',
         ]);
     }
@@ -59,8 +67,11 @@ class TvShowController extends Controller
      */
     public function popularTvShows(string $when = 'day')
     {
+        $request = $this->tvShowService->getPopular(1, $this->page);
+
         return view('tv.tvShows', [
-            'tvShows' => $this->tvShowService->getPopular(),
+            'tvShows' => $request['tvShows'],
+            'paginator' => $request['paginator'],
             'title' => 'Popular TV shows',
         ]);
     }
@@ -70,8 +81,11 @@ class TvShowController extends Controller
      */
     public function topRatedTvShows()
     {
+        $request = $this->tvShowService->getTopRated(1, $this->page);
+
         return view('tv.tvShows', [
-            'tvShows' => $this->tvShowService->getTopRated(),
+            'tvShows' => $request['tvShows'],
+            'paginator' => $request['paginator'],
             'title' => 'Top rated TV Shows',
         ]);
     }

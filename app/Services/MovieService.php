@@ -6,8 +6,6 @@ use App\Http\Integrations\TheMovieDb\EndPoints;
 use App\Http\Integrations\TheMovieDb\Requests\Actors\ActorRequest;
 use App\Http\Integrations\TheMovieDb\Requests\Movies\GeneralMovieRequest;
 use App\Http\Integrations\TheMovieDb\TheMovieDbConnector;
-use Illuminate\Support\Collection;
-use Saloon\PaginationPlugin\PagedPaginator;
 use function PHPUnit\Framework\isEmpty;
 
 class MovieService
@@ -16,10 +14,13 @@ class MovieService
 
     private TheMovieDbConnector $connector;
 
+    private GeneralService $generalService;
+
     public function __construct()
     {
         $this->endPoints = new EndPoints();
         $this->connector = new TheMovieDbConnector();
+        $this->generalService = new GeneralService();
     }
 
     public function getTrending(string $when, $limit = null, $page = 1)
@@ -39,7 +40,9 @@ class MovieService
                 ->take($limit)
                 ->first()
                 ->dto(),
-            'paginator' => $this->getPagination($results, $page),
+            'paginator' => $this
+                ->generalService
+                ->getPagination($results, $page),
         ];
     }
 
@@ -61,7 +64,7 @@ class MovieService
                 ->take($limit)
                 ->first()
                 ->dto(),
-            'paginator' => $this->getPagination($results, $page),
+            'paginator' => $this->generalService->getPagination($results, $page),
         ];
     }
 
@@ -83,7 +86,7 @@ class MovieService
                 ->take($limit)
                 ->first()
                 ->dto(),
-            'paginator' => $this->getPagination($results, $page),
+            'paginator' => $this->generalService->getPagination($results, $page),
         ];
     }
 
@@ -123,15 +126,5 @@ class MovieService
             ))
             ->dto()
             ->take($limit);
-    }
-
-    public function getPagination(PagedPaginator $results, $page): array
-    {
-        $currentPage = $results->getCurrentPage() + 1;
-        return [
-            'previousPage' => $currentPage > 1 ? $currentPage - 1 : null,
-            'nextPage' => $currentPage === 1 || !($page >= 500) ? $currentPage + 1 : null,
-            'currentPage' => $currentPage
-        ];
     }
 }

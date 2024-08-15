@@ -14,49 +14,82 @@ class TvShowService
 
     private TheMovieDbConnector $connector;
 
+    private GeneralService $generalService;
+
     public function __construct()
     {
         $this->endPoints = new EndPoints();
         $this->connector = new TheMovieDbConnector();
+        $this->generalService = new GeneralService();
     }
 
-    public function getOnTheAir($limit = null)
+    public function getOnTheAir($limit = 1, $page = 1)
     {
-        return $this->connector
-            ->send(new GeneralTvShowRequest(
+        $results = $this->connector
+            ->paginate(new GeneralTvShowRequest(
                 $this->endPoints
                     ->set($this->endPoints::$ONTHEAIRTVSHOWSREQUEST)
                     ->getEndPoint(),
                 'results'
-            ))
-            ->dto()
-            ->take($limit);
+            ));
+
+        return [
+            'tvShows' => $results
+                ->setStartPage($page)
+                ->collect(false)
+                ->take($limit)
+                ->first()
+                ->dto(),
+            'paginator' => $this
+                ->generalService
+                ->getPagination($results, $page),
+        ];
     }
 
-    public function getTopRated($limit = null)
+    public function getTopRated($limit = 1, $page = 1)
     {
-        return $this->connector
-            ->send(new GeneralTvShowRequest(
+        $results = $this->connector
+            ->paginate(new GeneralTvShowRequest(
                 $this->endPoints
                     ->set($this->endPoints::$TOPRATEDTVSHOWSREQUEST)
                     ->getEndPoint(),
                 'results'
-            ))
-            ->dto()
-            ->take($limit);
+            ));
+
+        return [
+            'tvShows' => $results
+                ->setStartPage($page)
+                ->collect(false)
+                ->take($limit)
+                ->first()
+                ->dto(),
+            'paginator' => $this
+                ->generalService
+                ->getPagination($results, $page),
+        ];
     }
 
-    public function getPopular($limit = null)
+    public function getPopular($limit = 1, $page = 1)
     {
-        return $this->connector
-            ->send(new GeneralTvShowRequest(
+        $results = $this->connector
+            ->paginate(new GeneralTvShowRequest(
                 $this->endPoints
                     ->set($this->endPoints::$POPULARTVSHOWSREQUEST)
                     ->getEndPoint(),
                 'results'
-            ))
-            ->dto()
-            ->take($limit);
+            ));
+
+        return [
+            'tvShows' => $results
+                ->setStartPage($page)
+                ->collect(false)
+                ->take($limit)
+                ->first()
+                ->dto(),
+            'paginator' => $this
+                ->generalService
+                ->getPagination($results, $page),
+        ];
     }
 
     public function getSimilar($id)
