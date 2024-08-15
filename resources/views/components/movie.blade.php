@@ -1,7 +1,7 @@
-@props(['movie' => null, 'link', 'imageSize', 'genres' => null])
+@props(['movie' => null, 'link', 'imageSize', 'genres' => null, 'details' => false])
 
 <div class="mb-10 mt-10 flex flex-col mr-2 space-y-8">
-    <p class="font-bold h-12 max-w-[200px]">{{ $movie->title }}</p>
+    @if($details)<p class="font-bold h-12 max-w-[200px]">{{ $movie->title }}</p>@endif
     @if($link)
         <a href="{{ route('showMovie', ['movieId' => $movie->id]) }}">
             <img
@@ -18,6 +18,7 @@
 
     <div class="max-w-[200px]">
         <p><span class="font-bold">Score: </span>{{ number_format($movie->vote_average, 1) }}</p>
+        @if($details)
         <p>
             <span class="font-bold">Genre: </span>
             @foreach($movie->genre_ids as $genre)
@@ -26,6 +27,7 @@
             </span>
             @endforeach
         </p>
+        @endif
         {{ $slot }}
     </div>
 </div>

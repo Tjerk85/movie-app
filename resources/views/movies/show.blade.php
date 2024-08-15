@@ -10,6 +10,7 @@
                 :movie="$movie"
                 :imageSize="500"
                 :link="false"
+                :details="true"
             >
                 <p><span class="font-bold">Year: </span>{{ $movie->release_date }}</p>
                 @if(isset($servicesForMovies['NL']['flatrate']))

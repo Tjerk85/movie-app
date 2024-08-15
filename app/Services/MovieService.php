@@ -131,6 +131,7 @@ class MovieService
         return [
             'previousPage' => $currentPage > 1 ? $currentPage - 1 : null,
             'nextPage' => $currentPage === 1 || !($page >= 500) ? $currentPage + 1 : null,
+            'currentPage' => $currentPage
         ];
     }
 }
