@@ -12,6 +12,7 @@
         "saloonphp/pagination-plugin": "^2.2"
     },
     "require-dev": {
+        "barryvdh/laravel-debugbar": "^3.13",
         "fakerphp/faker": "^1.23",
         "laravel/pint": "^1.16",
         "laravel/sail": "^1.26",

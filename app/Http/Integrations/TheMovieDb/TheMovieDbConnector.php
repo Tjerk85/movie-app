@@ -2,10 +2,12 @@
 
 namespace App\Http\Integrations\TheMovieDb;
 
+use Saloon\Contracts\Sender;
 use Saloon\Http\Auth\TokenAuthenticator;
 use Saloon\Http\Connector;
 use Saloon\Http\Request;
 use Saloon\Http\Response;
+use Saloon\Http\Senders\GuzzleSender;
 use Saloon\PaginationPlugin\Contracts\HasPagination;
 use Saloon\PaginationPlugin\PagedPaginator;
 use Saloon\Traits\Plugins\AcceptsJson;
@@ -13,6 +15,11 @@ use Saloon\Traits\Plugins\AcceptsJson;
 class TheMovieDbConnector extends Connector implements HasPagination
 {
     use AcceptsJson;
+
+    protected function defaultSender(): Sender
+    {
+        return resolve(GuzzleSender::class);
+    }
 
     protected function defaultAuth(): TokenAuthenticator
     {
