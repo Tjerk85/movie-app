@@ -6,8 +6,9 @@ use App\Models\ActorMovie;
 use Illuminate\Support\Collection;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
+use Saloon\PaginationPlugin\Contracts\Paginatable;
 
-class ActorRequest extends Request
+class ActorRequest extends Request implements Paginatable
 {
     /**
      * The HTTP method of the request

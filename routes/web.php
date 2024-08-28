@@ -3,6 +3,7 @@
 use App\Http\Controllers\MovieController;
 use App\Http\Controllers\TvShowController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ActorController;
 
 // Movie
 Route::get('/', [MovieController::class, 'index'])->name('home');
@@ -19,5 +20,6 @@ Route::get('/tv/popular', [TvShowController::class, 'popularTvShows'])->name('po
 Route::get('/tv/top-rated', [TvShowController::class, 'topRatedTvShows'])->name('topRatedTvShows');
 
 // Actor
-Route::get('/actors/actor/{id}', [\App\Http\Controllers\ActorController::class, 'showActor'])->name('showActor');
-Route::get('/actors', [\App\Http\Controllers\ActorController::class, 'index'])->name('actors');
+Route::get('/actors/actor/{id}', [ActorController::class, 'showActor'])->name('showActor');
+Route::get('/actors', [ActorController::class, 'index'])->name('actors');
+Route::get('/actors/trending', [ActorController::class, 'trendingActors'])->name('trendingActors');

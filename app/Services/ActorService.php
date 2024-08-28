@@ -15,10 +15,13 @@ class ActorService
 
     private TheMovieDbConnector $connector;
 
+    private GeneralService $generalService;
+
     public function __construct()
     {
         $this->endPoints = new EndPoints();
         $this->connector = new TheMovieDbConnector();
+        $this->generalService = new GeneralService();
     }
 
     public function getActor($id)
@@ -76,15 +79,26 @@ class ActorService
             ->take($limit);
     }
 
-    public function getTrendingActors($when = 'day', $limit = 12)
+    public function getTrendingActors($when = 'day', $limit = 1, $page = 1)
     {
-        return $this->connector
-            ->send(new ActorRequest(
+        $results = $this->connector
+            ->paginate(new ActorRequest(
                 $this->endPoints
                     ->set($this->endPoints::$TRENDINGACTORREQUEST, $when)
                     ->getEndPoint(),
                 'results'
-            ))->dto()
-            ->take($limit);
+            ));
+
+            return [
+                'actors' => $results
+                    ->setStartPage($page)
+                    ->collect(false)
+                    ->take($limit)
+                    ->first()
+                    ->dto(),
+                'paginator' => $this
+                    ->generalService
+                    ->getPagination($results, $page),
+            ];
     }
 }
