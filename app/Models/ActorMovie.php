@@ -8,34 +8,34 @@ use Illuminate\Support\Collection;
 readonly class ActorMovie
 {
     /**
-     * @param bool $adult
-     * @param int $gender
-     * @param int $id
-     * @param string $known_for_department
-     * @param string $name
-     * @param string $original_name
-     * @param float $popularity
+     * @param bool    $adult
+     * @param int     $gender
+     * @param int     $id
+     * @param ?string $known_for_department
+     * @param string  $name
+     * @param string  $original_name
+     * @param float   $popularity
      * @param ?string $profile_path
      * @param ?string $profile_path_unknown
-     * @param int|null $cast_id
-     * @param string|null $character
-     * @param string|null $credit_id
-     * @param int|null $order
+     * @param ?int    $cast_id
+     * @param ?string $character
+     * @param ?string $credit_id
+     * @param ?int    $order
      */
     public function __construct(
-        public bool        $adult,
-        public int         $gender,
-        public int         $id,
-        public string      $known_for_department,
-        public string      $name,
-        public string      $original_name,
-        public float       $popularity,
-        public ?string     $profile_path,
-        public ?string     $profile_path_unknown,
-        public int|null    $cast_id,
-        public string|null $character,
-        public string|null $credit_id,
-        public int|null    $order,
+        public bool    $adult,
+        public int     $gender,
+        public int     $id,
+        public ?string $known_for_department,
+        public string  $name,
+        public string  $original_name,
+        public float   $popularity,
+        public ?string $profile_path,
+        public ?string $profile_path_unknown,
+        public ?int    $cast_id,
+        public ?string $character,
+        public ?string $credit_id,
+        public ?int    $order,
     )
     {
     }
@@ -58,13 +58,13 @@ readonly class ActorMovie
             $object['adult'],
             $object['gender'],
             $object['id'],
-            $object['known_for_department'],
+            $object['known_for_department'] ?? null,
             $object['name'],
             $object['original_name'],
             $object['popularity'],
             $object['profile_path'],
             $object['profile_path_unknown'] = 'images/Unknown_person.jpg',
-                $object['cast_id'] ?? null,
+            $object['cast_id'] ?? null,
             $object['character'] ?? null,
             $object['credit_id'] ?? null,
             $object['order'] ?? null

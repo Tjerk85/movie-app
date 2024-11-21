@@ -6,7 +6,8 @@
             <div class="bg-gray-800 p-4 rounded">
                 <span class="font-bold">Trending this: </span>
                 <a href="{{ route('trendingActors') }}?trending=day">Day</a> |
-                <a href="{{ route('trendingActors') }}?trending=week">Week</a>
+                <a href="{{ route('trendingActors') }}?trending=week">Week</a>|
+                <a href="{{ request()->fullUrlWithQuery(['trending' => 'week', 'page' => $paginator['currentPage']]) }}">week append</a>
             </div>
             <x-paginator :paginator="$paginator" :route="'trendingActors'"/>
             <div class="grid md:grid-cols-4 grid-cols-2 justify-center">
