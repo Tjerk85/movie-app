@@ -15,5 +15,8 @@
     },
     "dependencies": {
         "flowbite": "^2.3.0"
+    },
+    "resolutions": {
+        "rollup": "npm:@rollup/wasm-node"
     }
 }
