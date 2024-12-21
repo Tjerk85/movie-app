@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Integrations\TheMovieDb\EndPoints;
+use App\Http\Integrations\TheMovieDb\Requests\TvShows\GeneralTvShowRequest;
 use App\Services\ActorService;
 use App\Services\TvShowService;
 
@@ -9,10 +11,7 @@ class TvShowController extends Controller
 {
     private TvShowService $tvShowService;
     private ActorService $actorService;
-    /**
-     * @var bool|float|int|mixed|string|null
-     */
-    private mixed $page;
+    private int $page;
 
     public function __construct()
     {
@@ -28,10 +27,17 @@ class TvShowController extends Controller
     {
         $limit = 4;
 
+        $rqClass = GeneralTvShowRequest::class;
         return view('tv.index', [
-            'popularTvShows' => $this->tvShowService->getPopular($limit)['tvShows']->take($limit),
-            'onTheAirTvShows' => $this->tvShowService->getOnTheAir($limit)['tvShows']->take($limit),
-            'topRatedTvShows' => $this->tvShowService->getTopRated($limit)['tvShows']->take($limit),
+            'popularTvShows' => $this->tvShowService
+                ->getMedia(EndPoints::$POPULARTVSHOWSREQUEST, $rqClass, limit: $limit,)
+            ['media']->take($limit),
+            'onTheAirTvShows' => $this->tvShowService
+                ->getMedia(EndPoints::$ONTHEAIRTVSHOWSREQUEST, $rqClass, limit: $limit,)
+            ['media']->take($limit),
+            'topRatedTvShows' => $this->tvShowService
+                ->getMedia(EndPoints::$TOPRATEDTVSHOWSREQUEST, $rqClass, limit: $limit,)
+            ['media']->take($limit),
         ]);
     }
 
@@ -40,9 +46,10 @@ class TvShowController extends Controller
      */
     public function showTvShow(int $id)
     {
+        $rqClass = GeneralTvShowRequest::class;
         return view('tv.show', [
-            'tvShow' => $this->tvShowService->getTvShow($id),
-            'similarTvShows' => $this->tvShowService->getSimilar($id),
+            'tvShow' => $this->tvShowService->getSingleMedium($id, $rqClass, EndPoints::$TVSHOWREQUEST),
+            'similarTvShows' => $this->tvShowService->getSimilar($id, $rqClass, EndPoints::$SIMILARTVSHOWSREQUEST),
             'actors' => $this->actorService->getActorRelatedToTvShow($id, 5),
             'itemsToShow' => 8,
         ]);
@@ -53,10 +60,11 @@ class TvShowController extends Controller
      */
     public function onTheAirTvShows()
     {
-        $request = $this->tvShowService->getOnTheAir(1, $this->page);
+        $request = $this->tvShowService
+            ->getMedia(EndPoints::$ONTHEAIRTVSHOWSREQUEST, GeneralTvShowRequest::class, $this->page);
 
         return view('tv.tvShows', [
-            'tvShows' => $request['tvShows'],
+            'tvShows' => $request['media'],
             'paginator' => $request['paginator'],
             'title' => 'Shows on the air',
         ]);
@@ -67,10 +75,11 @@ class TvShowController extends Controller
      */
     public function popularTvShows(string $when = 'day')
     {
-        $request = $this->tvShowService->getPopular(1, $this->page);
+        $request = $this->tvShowService
+            ->getMedia(EndPoints::$POPULARTVSHOWSREQUEST, GeneralTvShowRequest::class, $this->page);
 
         return view('tv.tvShows', [
-            'tvShows' => $request['tvShows'],
+            'tvShows' => $request['media'],
             'paginator' => $request['paginator'],
             'title' => 'Popular TV shows',
         ]);
@@ -81,10 +90,11 @@ class TvShowController extends Controller
      */
     public function topRatedTvShows()
     {
-        $request = $this->tvShowService->getTopRated(1, $this->page);
+        $request = $this->tvShowService
+            ->getMedia(EndPoints::$TOPRATEDTVSHOWSREQUEST, GeneralTvShowRequest::class, $this->page,);
 
         return view('tv.tvShows', [
-            'tvShows' => $request['tvShows'],
+            'tvShows' => $request['media'],
             'paginator' => $request['paginator'],
             'title' => 'Top rated TV Shows',
         ]);

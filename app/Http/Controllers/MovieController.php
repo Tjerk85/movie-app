@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Integrations\TheMovieDb\EndPoints;
+use App\Http\Integrations\TheMovieDb\Requests\Movies\GeneralMovieRequest;
 use App\Http\Integrations\TheMovieDb\Requests\Movies\ServicesToWatchRequest;
 use App\Http\Integrations\TheMovieDb\TheMovieDbConnector;
 use App\Services\MovieService;
@@ -30,10 +32,17 @@ class MovieController extends Controller
         $limit = 4;
         $when = $request->input('trending') ?? 'day';
 
+        $rqClass = GeneralMovieRequest::class;
         return view('movies.index', [
-                'trendingMovies' => $this->movieService->getTrending($when, $limit)['movies']->take($limit),
-                'popularMovies' => $this->movieService->getPopular($limit)['movies']->take($limit),
-                'topRatedMovies' => $this->movieService->getTopRated($limit)['movies']->take($limit),
+                'trendingMovies' => $this->movieService
+                    ->getMedia(EndPoints::$TRENDINGMOVIEREQUEST, $rqClass, when: $when, limit: $limit)
+                ['media']->take($limit),
+                'popularMovies' => $this->movieService
+                    ->getMedia(EndPoints::$POPULARMOVIEREQUEST, $rqClass, when: $when, limit: $limit)
+                ['media']->take($limit),
+                'topRatedMovies' => $this->movieService
+                    ->getMedia(EndPoints::$TOPRATEDMOVIEREQUEST, $rqClass, when: $when, limit: $limit)
+                ['media']->take($limit),
             ]
         );
     }
@@ -43,12 +52,11 @@ class MovieController extends Controller
      */
     public function showMovie(int $id)
     {
+        $rqClass = GeneralMovieRequest::class;
         return view('movies.show', [
-            'movie' => $this->movieService->getMovie($id),
-            'similarMovies' => $this->movieService->getSimilar($id),
-            'servicesForMovies' => collect($this->connector
-                ->send(new ServicesToWatchRequest($id))
-                ->json('results')),
+            'movie' => $this->movieService->getSingleMedium($id, $rqClass, EndPoints::$MOVIEREQUEST),
+            'similarMovies' => $this->movieService->getSimilar($id, $rqClass, EndPoints::$SIMILARMOVIEREQUEST),
+            'servicesForMovies' => collect($this->connector->send(new ServicesToWatchRequest($id))->json('results')),
             'actors' => $this->movieService->getActorsMovie($id, 5),
             'itemsToShow' => 8,
         ]);
@@ -59,10 +67,11 @@ class MovieController extends Controller
      */
     public function topRatedMovies()
     {
-        $request = $this->movieService->getTopRated(1, $this->page);
+        $request = $this->movieService
+            ->getMedia(EndPoints::$TOPRATEDMOVIEREQUEST, GeneralMovieRequest::class, $this->page);
 
         return view('movies.movies', [
-            'movies' => $request['movies'],
+            'movies' => $request['media'],
             'paginator' => $request['paginator'],
             'title' => 'Top Rated Movies',
         ]);
@@ -73,10 +82,11 @@ class MovieController extends Controller
      */
     public function trendingMovies(string $when = 'day')
     {
-        $request = $this->movieService->getTrending($when, 1, $this->page);
+        $request = $this->movieService
+            ->getMedia(EndPoints::$TRENDINGMOVIEREQUEST, GeneralMovieRequest::class, $this->page, $when);
 
         return view('movies.trending', [
-            'movies' => $request['movies'],
+            'movies' => $request['media'],
             'paginator' => $request['paginator'],
             'title' => 'Trending Movies',
         ]);
@@ -87,10 +97,11 @@ class MovieController extends Controller
      */
     public function popularMovies()
     {
-        $request = $this->movieService->getPopular(1, $this->page);
+        $request = $this->movieService
+            ->getMedia(EndPoints::$POPULARMOVIEREQUEST, GeneralMovieRequest::class, $this->page);
 
         return view('movies.movies', [
-            'movies' => $request['movies'],
+            'movies' => $request['media'],
             'paginator' => $request['paginator'],
             'title' => 'Popular Movies',
         ]);
