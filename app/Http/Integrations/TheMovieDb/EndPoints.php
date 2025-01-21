@@ -43,6 +43,8 @@ class EndPoints
 
     public static $ACTORRELATEDTOMOVIEREQUEST = '/find/{$param}?external_source=imdb_id';
 
+    public static $SEARCHQUERYREQUEST = '/search/multi?query={$param}&include_adult=true&language=en-US&page=1';
+
     private string $endPoint;
 
     private string $param;

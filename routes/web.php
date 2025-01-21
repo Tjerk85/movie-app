@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\MovieController;
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\TvShowController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ActorController;
@@ -23,3 +24,6 @@ Route::get('/tv/top-rated', [TvShowController::class, 'topRatedTvShows'])->name(
 Route::get('/actors/actor/{id}', [ActorController::class, 'showActor'])->name('showActor');
 Route::get('/actors', [ActorController::class, 'index'])->name('actors');
 Route::get('/actors/trending', [ActorController::class, 'trendingActors'])->name('trendingActors');
+
+// Search movies, tv shows and actors
+Route::post('/search', [SearchController::class, 'search'])->name('search');

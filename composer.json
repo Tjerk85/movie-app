@@ -8,6 +8,7 @@
         "php": "^8.2",
         "laravel/framework": "^11.9",
         "laravel/tinker": "^2.9",
+        "livewire/livewire": "^3.5",
         "saloonphp/laravel-plugin": "^3.0",
         "saloonphp/pagination-plugin": "^2.2"
     },

@@ -8,15 +8,12 @@ use Illuminate\Http\Request;
 
 class ActorController extends Controller
 {
-    private TheMovieDbConnector $connector;
-
     private ActorService $actorService;
 
     private mixed $page;
 
     public function __construct()
     {
-        $this->connector = new TheMovieDbConnector();
         $this->actorService = new ActorService();
         $this->page = request()->query->get('page', 1);
     }

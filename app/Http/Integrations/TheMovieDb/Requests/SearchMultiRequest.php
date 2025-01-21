@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Http\Integrations\TheMovieDb\Requests\Movies;
+namespace App\Http\Integrations\TheMovieDb\Requests;
 
-use App\Models\Movie;
 use Illuminate\Support\Collection;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
-use Saloon\PaginationPlugin\Contracts\Paginatable;
+use Saloon\Http\Response;
+use App\Models\SearchMulti;
 
-class GeneralMovieRequest extends Request implements Paginatable
+class SearchMultiRequest extends Request
 {
     /**
      * The HTTP method of the request
@@ -28,19 +28,14 @@ class GeneralMovieRequest extends Request implements Paginatable
         return $this->endPoint;
     }
 
-    /**
-     * @throws \JsonException
-     */
-    public function createDtoFromResponse($response): Movie|Collection|null
+    public function createDtoFromResponse(Response $response): SearchMulti|Collection|null
     {
         if ($this->jsonResultKey) {
             if ($response->json('total_results') === 0) {
                 return null;
             }
 
-            return Movie::createMovieObject($response->collect($this->jsonResultKey));
+            return SearchMulti::createSearchObject($response->collect($this->jsonResultKey));
         }
-
-        return Movie::createMovieObject($response->json());
     }
 }
