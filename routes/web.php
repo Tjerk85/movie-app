@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DiscoverWithGenresController;
 use App\Http\Controllers\MovieController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\TvShowController;
@@ -27,3 +28,7 @@ Route::get('/actors/trending', [ActorController::class, 'trendingActors'])->name
 
 // Search movies, tv shows and actors
 Route::post('/search', [SearchController::class, 'search'])->name('search');
+
+// Genre
+Route::get('/genre/{genreName}/{genreId}', [DiscoverWithGenresController::class, 'byGenre'])->name('genre');
+Route::get('/genre/{typeOfMedia}', [DiscoverWithGenresController::class, 'index'])->name('index');

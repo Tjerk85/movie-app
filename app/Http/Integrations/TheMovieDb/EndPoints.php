@@ -45,6 +45,10 @@ class EndPoints
 
     public static $SEARCHQUERYREQUEST = '/search/multi?query={$param}&include_adult=true&language=en-US&page=1';
 
+    public static string $DISCOVERREQUEST = '/discover/movie?include_adult=true&include_video=false&language=en-US&page=1&sort_by=popularity.desc&with_genres={$param}';
+
+    public static string $GENREREQUEST = '/genre/{$param}/list?language=en';
+
     private string $endPoint;
 
     private string $param;

@@ -35,13 +35,13 @@ class MovieController extends Controller
         $rqClass = GeneralMovieRequest::class;
         return view('movies.index', [
                 'trendingMovies' => $this->movieService
-                    ->getMedia(EndPoints::$TRENDINGMOVIEREQUEST, $rqClass, when: $when, limit: $limit)
+                    ->getMedia(EndPoints::$TRENDINGMOVIEREQUEST, $rqClass, param: $when, limit: $limit)
                 ['media']->take($limit),
                 'popularMovies' => $this->movieService
-                    ->getMedia(EndPoints::$POPULARMOVIEREQUEST, $rqClass, when: $when, limit: $limit)
+                    ->getMedia(EndPoints::$POPULARMOVIEREQUEST, $rqClass, param: $when, limit: $limit)
                 ['media']->take($limit),
                 'topRatedMovies' => $this->movieService
-                    ->getMedia(EndPoints::$TOPRATEDMOVIEREQUEST, $rqClass, when: $when, limit: $limit)
+                    ->getMedia(EndPoints::$TOPRATEDMOVIEREQUEST, $rqClass, param: $when, limit: $limit)
                 ['media']->take($limit),
             ]
         );

@@ -19,12 +19,12 @@ abstract class TypeOfMedia
         $this->generalService = new GeneralService();
     }
 
-    public function getMedia($endPoint, string $requestClass, int $page = 1, string $when = '', $limit = 1): array
+    public function getMedia($endPoint, string $requestClass, int $page = 1, string $param = '', $limit = 1): array
     {
         $results = $this->connector
             ->paginate(new $requestClass(
                 $this->endPoints
-                    ->set($endPoint, $when)
+                    ->set($endPoint, $param)
                     ->getEndPoint(),
                 'results'
             ));

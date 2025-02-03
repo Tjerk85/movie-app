@@ -22,9 +22,7 @@
         <p>
             <span class="font-bold">Genre: </span>
             @foreach($movie->genre_ids as $genre)
-                <span>
-                {{ $genre->name }}@if(!$loop->last),@endif
-            </span>
+                <a class="text-blue-700" href="/genre/{{ $genre->name . "/" . $genre->id }}">{{ $genre->name }}@if(!$loop->last),@endif</a>
             @endforeach
         </p>
         @endif

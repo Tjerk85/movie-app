@@ -85,8 +85,7 @@ readonly class Movie
             $endPoint
                 ->set($endPoint::$MOVIEGENREREREQUEST)
                 ->getEndPoint()
-        ))
-            ->dto();
+        ))->dto();
 
         $result = $genres->whereIn('id', $genresObject);
 

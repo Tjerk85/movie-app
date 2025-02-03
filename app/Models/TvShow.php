@@ -85,8 +85,7 @@ readonly class TvShow
             $endPoint
                 ->set($endPoint::$TVSHOWGENREREQUEST)
                 ->getEndPoint()
-        ))
-            ->dto();
+        ))->dto();
 
         $result = $genres->whereIn('id', $genresObject);
 
