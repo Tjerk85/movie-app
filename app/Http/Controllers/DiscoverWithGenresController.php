@@ -47,18 +47,25 @@ class DiscoverWithGenresController extends Controller
 
     public function byGenre(Request $request)
     {
-        $genre = $request->segment(3);
+        $genreId = $request->segment(3);
         $discoverRequest = $this->movieService->getMedia(
             EndPoints::$DISCOVERREQUEST,
             GeneralMovieRequest::class,
             $this->page,
-            $genre,
+            $genreId,
         );
+
+        $nameGenre = $request->segment(2);
+        if (! isset($discoverRequest['media'])) {
+            return view('partials.not-found', [
+                'message' => 'Sorry no movies or tv series found with the genre: ' . $nameGenre,
+            ]);
+        }
 
         return view('genres.genre-index', [
                 'movies' => $discoverRequest['media'],
                 'paginator' => $discoverRequest['paginator'],
-                'title' => 'Genre: '. $request->segment(2),
+                'title' => 'Genre: '.$nameGenre,
             ]
         );
     }
