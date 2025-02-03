@@ -26,7 +26,7 @@
            placeholder="E.g: Matrix reloaded"/>
 
     @if(strlen($search) >= 2 && !is_null($results))
-        <div x-show="! expanded" class="absolute bg-gray-900 pl-4 pr-5 pb-2 rounded border-2 border-gray-500 mr-10 w-[450px] h-[600px] overflow-auto">
+        <div x-show="! expanded" class="absolute bg-gray-900 pl-4 pr-5 pb-2 rounded border-2 border-gray-500 mr-6 md:w-[445px] h-[600px] overflow-auto">
             <ul>
                 @foreach ($results as $result)
                     <li wire:key="{{ $result->id }}" class="p-2 border-gray-500 border-b-2">
