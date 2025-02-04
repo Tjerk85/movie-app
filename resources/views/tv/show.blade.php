@@ -10,6 +10,7 @@
                 :tvShow="$tvShow"
                 :imageSize="500"
                 :link="false"
+                :details="true"
             >
                 <p><span class="font-bold">First air date: </span>{{ $tvShow->first_air_date }}</p>
                 @if(isset($servicesForTvs['NL']['flatrate']))

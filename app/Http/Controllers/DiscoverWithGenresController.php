@@ -3,13 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Integrations\TheMovieDb\EndPoints;
-use App\Http\Integrations\TheMovieDb\Requests\GenresRequest;
 use App\Http\Integrations\TheMovieDb\Requests\Movies\GeneralMovieRequest;
 use App\Http\Integrations\TheMovieDb\Requests\TvShows\GeneralTvShowRequest;
-use App\Http\Integrations\TheMovieDb\TheMovieDbConnector;
+use App\Services\GenreService;
 use App\Services\MovieService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Collection;
+use Illuminate\View\View;
 
 class DiscoverWithGenresController extends Controller
 {
@@ -22,23 +21,18 @@ class DiscoverWithGenresController extends Controller
         $this->page = request()->query->get('page', 1);
     }
 
-    public function index(Request $request)
+    public function index(Request $request): View
     {
         $mediaTypes = ['movie', 'tv'];
         $typeOfMedia = $request->segment(2);
-        $connector = new TheMovieDbConnector();
-        $endPoint = new EndPoints();
 
         if (!in_array($typeOfMedia, $mediaTypes)) {
-            return 'Type of media not found';
+            return view('partials.not-found', [
+                'message' => 'Type of media not found',
+            ]);
         }
 
-        /** @var Collection $genres */
-        $genres = $connector->send(new GenresRequest(
-            $endPoint
-                ->set($endPoint::$GENREREQUEST, [$typeOfMedia])
-                ->getEndPoint()
-        ))->dto();
+        $genres = (new GenreService())->getGenres($typeOfMedia);
 
         return view('genres.genres', [
             'genres' => $genres,
@@ -47,16 +41,16 @@ class DiscoverWithGenresController extends Controller
         ]);
     }
 
-    public function byGenre(Request $request)
+    public function byGenre(Request $request): View
     {
         $genreId = $request->segment(4);
         $typeOfMedia = $request->segment(2);
         $mediaType = 'movies';
-        $typeOfMediaClass =  GeneralMovieRequest::class;
+        $typeOfMediaClass = GeneralMovieRequest::class;
 
         if ($typeOfMedia === 'tv') {
             $mediaType = 'tvShows';
-            $typeOfMediaClass =  GeneralTvShowRequest::class;
+            $typeOfMediaClass = GeneralTvShowRequest::class;
         }
 
         $discoverRequest = $this->movieService->getMedia(

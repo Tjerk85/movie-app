@@ -22,7 +22,9 @@
         <p>
             <span class="font-bold">Genre: </span>
             @foreach($movie->genre_ids as $genre)
-                <a class="text-blue-700" href="/genre/{{ $genre->name . "/" . $genre->id }}">{{ $genre->name }}@if(!$loop->last),@endif</a>
+                <a class="text-blue-700" href="{{ route('genre', ['typeOfMedia' => 'movie', 'genreName' => $genre->name, 'genreId' => $genre->id]) }}">
+                    {{ $genre->name }}@if(!$loop->last),@endif
+                </a>
             @endforeach
         </p>
         @endif
