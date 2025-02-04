@@ -29,7 +29,7 @@ class ActorService
         return $this->connector
             ->send(new ActorSingleRequest(
                 $this->endPoints
-                    ->set($this->endPoints::$ACTORREQUEST, $id)
+                    ->set($this->endPoints::$ACTORREQUEST, [$id])
                     ->getEndPoint()
             ))
             ->dto();
@@ -54,7 +54,7 @@ class ActorService
         $results = $this->connector
             ->send(new ActorRequest(
                 $this->endPoints
-                    ->set($this->endPoints::$ACTORSRELATEDTOTVSHOWREQUEST, $id)
+                    ->set($this->endPoints::$ACTORSRELATEDTOTVSHOWREQUEST, [$id])
                     ->getEndPoint(),
                 'cast'
             ))
@@ -84,7 +84,7 @@ class ActorService
         $results = $this->connector
             ->paginate(new ActorRequest(
                 $this->endPoints
-                    ->set($this->endPoints::$TRENDINGACTORREQUEST, $when)
+                    ->set($this->endPoints::$TRENDINGACTORREQUEST, [$when])
                     ->getEndPoint(),
                 'results'
             ));

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Integrations\TheMovieDb\EndPoints;
 use App\Http\Integrations\TheMovieDb\Requests\GenresRequest;
 use App\Http\Integrations\TheMovieDb\Requests\Movies\GeneralMovieRequest;
+use App\Http\Integrations\TheMovieDb\Requests\TvShows\GeneralTvShowRequest;
 use App\Http\Integrations\TheMovieDb\TheMovieDbConnector;
 use App\Services\MovieService;
 use Illuminate\Http\Request;
@@ -35,35 +36,45 @@ class DiscoverWithGenresController extends Controller
         /** @var Collection $genres */
         $genres = $connector->send(new GenresRequest(
             $endPoint
-                ->set($endPoint::$GENREREQUEST, $typeOfMedia)
+                ->set($endPoint::$GENREREQUEST, [$typeOfMedia])
                 ->getEndPoint()
         ))->dto();
 
         return view('genres.genres', [
             'genres' => $genres,
-            'title' => 'Discover '. $typeOfMedia . ' genres',
+            'typeOfMedia' => $typeOfMedia,
+            'title' => 'Discover '.$typeOfMedia.' genres',
         ]);
     }
 
     public function byGenre(Request $request)
     {
-        $genreId = $request->segment(3);
+        $genreId = $request->segment(4);
+        $typeOfMedia = $request->segment(2);
+        $mediaType = 'movies';
+        $typeOfMediaClass =  GeneralMovieRequest::class;
+
+        if ($typeOfMedia === 'tv') {
+            $mediaType = 'tvShows';
+            $typeOfMediaClass =  GeneralTvShowRequest::class;
+        }
+
         $discoverRequest = $this->movieService->getMedia(
             EndPoints::$DISCOVERREQUEST,
-            GeneralMovieRequest::class,
+            $typeOfMediaClass,
             $this->page,
-            $genreId,
+            [$typeOfMedia, $genreId],
         );
 
-        $nameGenre = $request->segment(2);
-        if (! isset($discoverRequest['media'])) {
+        $nameGenre = $request->segment(3);
+        if (!isset($discoverRequest['media'])) {
             return view('partials.not-found', [
-                'message' => 'Sorry no movies or tv series found with the genre: ' . $nameGenre,
+                'message' => 'Sorry no movies or tv series found with the genre: '.$nameGenre,
             ]);
         }
 
         return view('genres.genre-index', [
-                'movies' => $discoverRequest['media'],
+                $mediaType => $discoverRequest['media'],
                 'paginator' => $discoverRequest['paginator'],
                 'title' => 'Genre: '.$nameGenre,
             ]

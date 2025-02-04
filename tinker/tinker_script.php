@@ -14,7 +14,7 @@ $endPoints = new EndPoints();
 
 $data = $connector
     ->send(new GeneralMovieRequest(
-        $endPoints->set($endPoints::$SIMILARMOVIEREQUEST, 313)
+        $endPoints->set($endPoints::$SIMILARMOVIEREQUEST, [313])
             ->getEndPoint(),
         'results'
     ))->dto()

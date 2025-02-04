@@ -16,7 +16,7 @@ class SearchMultiService extends TypeOfMedia
     {
         return $this->connector->send(new SearchMultiRequest(
             $this->endPoints
-                ->set($this->endPoints::$SEARCHQUERYREQUEST, $this->input)
+                ->set($this->endPoints::$SEARCHQUERYREQUEST, [$this->input])
                 ->getEndPoint(),
             'results'
         ))->dto();

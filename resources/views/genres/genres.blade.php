@@ -5,7 +5,11 @@
             <h1 class="mb-5 text-3xl">{{ $title }}</h1>
             <div class="grid md:grid-cols-4 mb-10 justify-center">
                 @foreach($genres as $genre)
-                    <a class="text-blue-700 text-2xl mt-5 mr-10" href="/genre/{{ $genre->name . "/" . $genre->id }}">{{ $genre->name }}</a>
+                    <a class="text-blue-700 text-2xl mt-5 mr-10"
+                       href="{{ route('genre', ['typeOfMedia' => $typeOfMedia, 'genreName' => $genre->name, 'genreId' => $genre->id]) }}"
+                    >
+                        {{ $genre->name }}
+                    </a>
                 @endforeach
             </div>
         </div>

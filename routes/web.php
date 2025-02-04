@@ -30,5 +30,5 @@ Route::get('/actors/trending', [ActorController::class, 'trendingActors'])->name
 Route::post('/search', [SearchController::class, 'search'])->name('search');
 
 // Genre
-Route::get('/genre/{genreName}/{genreId}', [DiscoverWithGenresController::class, 'byGenre'])->name('genre');
+Route::get('/genre/{typeOfMedia}/{genreName}/{genreId}', [DiscoverWithGenresController::class, 'byGenre'])->name('genre');
 Route::get('/genre/{typeOfMedia}', [DiscoverWithGenresController::class, 'index'])->name('index');

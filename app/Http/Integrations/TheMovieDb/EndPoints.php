@@ -4,17 +4,17 @@ namespace App\Http\Integrations\TheMovieDb;
 
 class EndPoints
 {
-    public static $MOVIEREQUEST = '/movie/{$param}';
+    public static $MOVIEREQUEST = '/movie/{$1}';
 
-    public static $SIMILARMOVIEREQUEST = '/movie/{$param}/similar?language=en-US&page=1';
+    public static $SIMILARMOVIEREQUEST = '/movie/{$1}/similar?language=en-US&page=1';
 
     public static $POPULARMOVIEREQUEST = '/movie/popular?language=en-US';
 
     public static $TOPRATEDMOVIEREQUEST = '/movie/top_rated?language=en-US';
 
-    public static $TRENDINGMOVIEREQUEST = '/trending/movie/{$param}?language=en-US';
+    public static $TRENDINGMOVIEREQUEST = '/trending/movie/{$1}?language=en-US';
 
-    public static $SERVICESTOWATCHMOVIEREQUEST = '/movie/{$param}/watch/providers';
+    public static $SERVICESTOWATCHMOVIEREQUEST = '/movie/{$1}/watch/providers';
 
     public static $ONTHEAIRTVSHOWSREQUEST = '/tv/on_the_air?language=en-US';
 
@@ -22,47 +22,45 @@ class EndPoints
 
     public static $TOPRATEDTVSHOWSREQUEST = '/tv/top_rated?language=en-US';
 
-    public static $SIMILARTVSHOWSREQUEST = '/tv/{$param}/similar?language=en-US&page=1';
+    public static $SIMILARTVSHOWSREQUEST = '/tv/{$1}/similar?language=en-US&page=1';
 
-    public static $TVSHOWREQUEST = '/tv/{$param}?language=en-US';
+    public static $TVSHOWREQUEST = '/tv/{$1}?language=en-US';
 
     public static $MOVIEGENREREREQUEST = '/genre/movie/list';
 
     public static $TVSHOWGENREREQUEST = '/genre/tv/list';
 
-    public static $ACTORSMOVIEREQUEST = '/movie/{$param}/credits';
+    public static $ACTORSMOVIEREQUEST = '/movie/{$1}/credits';
 
-    public static $ACTORSRELATEDTOTVSHOWREQUEST = '/tv/{$param}/credits';
+    public static $ACTORSRELATEDTOTVSHOWREQUEST = '/tv/{$1}/credits';
 
-    public static $ACTORREQUEST = '/person/{$param}?append_to_response=images,movie_credits,tv_credits';
+    public static $ACTORREQUEST = '/person/{$1}?append_to_response=images,movie_credits,tv_credits';
 
     public static $POPULARACTORREQUEST = '/person/popular';
 
-    /* {$param} is day ore week */
-    public static $TRENDINGACTORREQUEST = '/trending/person/{$param}';
+    /* {$1} is day ore week */
+    public static $TRENDINGACTORREQUEST = '/trending/person/{$1}';
 
-    public static $ACTORRELATEDTOMOVIEREQUEST = '/find/{$param}?external_source=imdb_id';
+    public static $ACTORRELATEDTOMOVIEREQUEST = '/find/{$1}?external_source=imdb_id';
 
-    public static $SEARCHQUERYREQUEST = '/search/multi?query={$param}&include_adult=true&language=en-US&page=1';
+    public static $SEARCHQUERYREQUEST = '/search/multi?query={$1}&include_adult=true&language=en-US&page=1';
 
-    public static string $DISCOVERREQUEST = '/discover/movie?include_adult=true&include_video=false&language=en-US&page=1&sort_by=popularity.desc&with_genres={$param}';
+    public static string $DISCOVERREQUEST = '/discover/{$1}?include_adult=true&include_video=false&language=en-US&page=1&sort_by=popularity.desc&with_genres={$2}';
 
-    public static string $GENREREQUEST = '/genre/{$param}/list?language=en';
+    public static string $GENREREQUEST = '/genre/{$1}/list?language=en';
 
     private string $endPoint;
 
-    private string $param;
+    private array $params;
     /**
      * @var int|mixed
      */
     private mixed $page;
 
-    public function __construct() {}
-
-    public function set($endPoint, $param = '', $page = 1)
+    public function set($endPoint, $params = [], $page = 1)
     {
         $this->endPoint = $endPoint;
-        $this->param = $param;
+        $this->params = $params;
         $this->page = $page;
 
         return $this;
@@ -79,8 +77,13 @@ class EndPoints
 
     public function getEndPoint(): string
     {
-        return isset($this->param)
-            ? str_replace('{$param}', $this->param, $this->endPoint)
+        $paramsToReplace = [];
+        foreach ($this->params as $key => $param) {
+            $paramsToReplace[] = '{$' . $key+1 . '}';
+        }
+
+        return isset($this->params)
+            ? str_replace($paramsToReplace, $this->params, $this->endPoint)
             : $this->endPoint;
     }
 }

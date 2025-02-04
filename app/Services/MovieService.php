@@ -12,7 +12,7 @@ class MovieService extends TypeOfMedia
         return $this->connector
             ->send(new ActorRequest(
                 $this->endPoints
-                    ->set($this->endPoints::$ACTORSMOVIEREQUEST, $id)
+                    ->set($this->endPoints::$ACTORSMOVIEREQUEST, [$id])
                     ->getEndPoint(),
                 'cast'
             ))

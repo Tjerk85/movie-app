@@ -5,13 +5,23 @@
             <h1 class="ml-5 mb-5 text-2xl">{{ $title }}</h1>
             <x-paginator :paginator="$paginator" :route="'trendingMovies'"/>
             <div class="grid md:grid-cols-4 grid-cols-2 justify-center">
-                @foreach($movies as $movie)
-                    <x-movie
-                        :movie="$movie"
-                        :imageSize="200"
-                        :link="true"
-                    />
-                @endforeach
+                @if(isset($movies))
+                    @foreach($movies as $movie)
+                        <x-movie
+                            :movie="$movie"
+                            :imageSize="200"
+                            :link="true"
+                        />
+                    @endforeach
+                @elseif(isset($tvShows))
+                    @foreach($tvShows as $tvShow)
+                        <x-tvShow
+                                :tvShow="$tvShow"
+                                :imageSize="200"
+                                :link="true"
+                        />
+                    @endforeach
+                @endif
             </div>
         </div>
     </div>
