@@ -15,6 +15,7 @@ services:
             - "5173:5173"
         networks:
             - caddy_network
+        restart: unless-stopped
         volumes:
             - ./:/var/www/html:cached
             - ../portainer/caddy_data/caddy/certificates/local/movies.localhost:/var/www/html/docker/cert
