@@ -18,7 +18,7 @@
                     />
                 @endforeach
             </div>
-            <x-arrow :title="'More trending'" :route="route('trendingMovies').'/'. request()->segment(1)"/>
+            <x-arrow :title="'More trending'" :route="route('trendingMovies').'/'. request()->input('trending')"/>
 
             <h1 class="ml-5 mb-5 text-2xl">Popular Movies:</h1>
             <div class="grid md:grid-cols-4 grid-cols-2 justify-center">
