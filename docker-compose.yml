@@ -5,11 +5,11 @@ services:
             context: ./
             dockerfile: "./docker/php/Dockerfile"
             args:
-                user: sammy
+                user: tjerk
                 uid: 1000
-        environment:
-            XDEBUG_CONFIG: "remote_host={{127.0.0.1}}"
-            PHP_IDE_CONFIG: "serverName=host.docker.internal"
+        # environment:
+        #     XDEBUG_CONFIG: "remote_host={{127.0.0.1}}"
+        #     PHP_IDE_CONFIG: "serverName=host.docker.internal"
         working_dir: /var/www/html
         ports:
             - "5173:5173"
@@ -18,8 +18,8 @@ services:
         restart: unless-stopped
         volumes:
             - ./:/var/www/html:cached
-            - ../portainer/caddy_data/caddy/certificates/local/movies.localhost:/var/www/html/docker/cert
-            - ./node_modules:/var/www/html/node_modules:delegated
+            # - ../portainer/caddy_data/caddy/certificates/local/movies.localhost:/var/www/html/docker/cert
+            # - ./node_modules:/var/www/html/node_modules:delegated
             - ./public:/var/www/html/public:delegated
 
 #    nginx:
