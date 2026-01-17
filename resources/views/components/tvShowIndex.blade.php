@@ -9,7 +9,7 @@
                     @if($itemsToShow ? $loop->index + 1 <= $itemsToShow : count($tvShows))
                         <x-tvShow
                             :tvShow="$tvShow"
-                            :imageSize="400"
+                            :imageSize="200"
                             :link="true"
                         />
                     @endif

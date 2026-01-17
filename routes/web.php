@@ -25,6 +25,7 @@ Route::get('/tv/top-rated', [TvShowController::class, 'topRatedTvShows'])->name(
 Route::get('/actors/actor/{id}', [ActorController::class, 'showActor'])->name('showActor');
 Route::get('/actors', [ActorController::class, 'index'])->name('actors');
 Route::get('/actors/trending', [ActorController::class, 'trendingActors'])->name('trendingActors');
+Route::get('/actors/popular', [ActorController::class, 'pupularActors'])->name('pupularActors');
 
 // Search movies, tv shows and actors
 Route::post('/search', [SearchController::class, 'search'])->name('search');

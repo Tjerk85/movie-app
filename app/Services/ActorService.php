@@ -67,16 +67,27 @@ class ActorService
         return is_null($results) ? null : $results->take($limit);
     }
 
-    public function getPopularActors($limit = 12)
+    public function getPopularActors($limit = 12, $page = 1)
     {
-        return $this->connector
-            ->send(new ActorRequest(
+        $results = $this->connector
+            ->paginate(new ActorRequest(
                 $this->endPoints
                     ->set($this->endPoints::$POPULARACTORREQUEST)
                     ->getEndPoint(),
                 'results'
-            ))->dto()
-            ->take($limit);
+            ));
+        
+        return [
+            'actors' => $results
+                    ->setStartPage($page)
+                    ->collect(false)
+                    ->take($limit)
+                    ->first()
+                    ->dto(),
+            'paginator' => $this
+                    ->generalService
+                    ->getPagination($results, $page),
+        ];
     }
 
     public function getTrendingActors($when = 'day', $limit = 1, $page = 1)

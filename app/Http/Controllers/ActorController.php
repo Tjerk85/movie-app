@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Integrations\TheMovieDb\TheMovieDbConnector;
 use App\Services\ActorService;
 use Illuminate\Http\Request;
 
@@ -24,8 +23,8 @@ class ActorController extends Controller
         $when = $request->input('trending') ?? 'day';
 
         return view('actors.index', [
-            'trendingActors' => $this->actorService->getTrendingActors($when, 1)['actors']->take($limit),
-            'popularActors' => $this->actorService->getPopularActors($limit),
+            'trendingActors' => $this->actorService->getTrendingActors($when)['actors']->take($limit),
+            'popularActors' => $this->actorService->getPopularActors($limit)['actors']->take($limit),
             'itemsToShow' => $limit
         ]);
     }
@@ -48,6 +47,17 @@ class ActorController extends Controller
             'actors' => $actorsRequest['actors'],
             'paginator' => $actorsRequest['paginator'],
             'title' => 'Trending Actors',
+        ]);
+    }
+    
+    public function pupularActors() 
+    {
+        $actorsRequest = $this->actorService->getPopularActors(1, $this->page);
+        
+        return view('actors.popular', [
+            'actors' => $actorsRequest['actors'],
+            'paginator' => $actorsRequest['paginator'],
+            'title' => 'Pupular Actors',
         ]);
     }
 }

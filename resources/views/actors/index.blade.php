@@ -17,15 +17,15 @@
             </x-actorsIndex>
             <x-arrow class="" :title="'More trending'" :route="route('trendingActors')"/>
         </div>
-    </div>
-        
-        
-        <x-actorsIndex
-        :actors="$popularActors"
-        :title="'Popular Actors'"
-        :itemsToShow="$itemsToShow"
-        :maxContainerSize="'md:max-w-[1000px]'"
-        :gridCols="'md:grid-cols-4'"
-        />
-    </div>
+        <div class="md:max-w-[1000px] max-w-[350px]">
+            <x-actorsIndex
+                :actors="$popularActors"
+                :title="'Popular Actors'"
+                :itemsToShow="$itemsToShow"
+                :maxContainerSize="'md:max-w-[1000px]'"
+                :gridCols="'md:grid-cols-4'"
+                />
+            <x-arrow class="" :title="'More Popular'" :route="route('pupularActors')"/>
+        </div>
+    </div>   
 @endsection
