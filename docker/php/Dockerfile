@@ -1,4 +1,4 @@
-FROM php:8.2-fpm as base
+FROM php:8.5-fpm as base
 
 # Arguments defined in docker-compose.yml
 ENV user=sammy
