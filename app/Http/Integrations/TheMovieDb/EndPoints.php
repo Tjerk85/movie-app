@@ -6,6 +6,8 @@ class EndPoints
 {
     public static $MOVIEREQUEST = '/movie/{$1}?include_adult=false';
 
+    public static $MOVIEIMAGESREQUEST = '/movie/{$1}/images';
+
     public static $SIMILARMOVIEREQUEST = '/movie/{$1}/similar?language=en-US&page=1&include_adult=false';
 
     public static $POPULARMOVIEREQUEST = '/movie/popular?language=en-US&include_adult=false';

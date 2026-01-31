@@ -1,4 +1,4 @@
-<nav class="border-b border-gray-700 z-20">
+<nav class="border-b border-gray-700 z-50">
     <ul class="max-w-full md:ml-20 md:mr-20 flex flex-wrap items-center justify-between mx-auto p-4">
         <li class="group relative dropdown px-4 cursor-pointer font-bold text-base uppercase tracking-wide">
             <a href="{{ route('home') }}">Movies</a>

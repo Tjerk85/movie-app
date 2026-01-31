@@ -10,10 +10,12 @@
             >
         </a>
     @else
-        <img
-            src="https://image.tmdb.org/t/p/w{{ $imageSize }}/{{ $movie->poster_path }}"
-            alt="{{ $movie->title }}"
-        >
+        <livewire:images
+                :posterPath="$movie->poster_path"
+                :imageSize="$imageSize"
+                :movieId="$movie->id"
+                :movieTitle="$movie->title"
+        />
     @endif
 
     <div class="max-w-[200px]">
