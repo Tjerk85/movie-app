@@ -7,33 +7,36 @@
     >
 
     <div wire:loading>
-        <span class="fixed top-0 left-0 w-full h-screen bg-black bg-opacity-50 flex items-center justify-center"
-        >Images are loading...
+        <span class="fixed top-0 left-0 w-full h-screen bg-black bg-opacity-50 flex items-center justify-center">
+            Images are loading...
         </span>
     </div>
 
-@if ($activeMovieId === $movieId)
-        <div x-on:click.outside="expanded = false"
-             x-show="expanded"
-             wire:loading.remove
-        >
-            <span x-on:click="expanded = false"
-                  class="fixed z-50 top-14 xl:top-36 right-14 text-2xl text-gray-400 cursor-pointer"
-            >&#x2715;
-            </span>
+    @if ($activeMovieId === $movieId)
+        @teleport('body')
+            <div x-on:click.outside="expanded = false"
+                 x-show="expanded"
+                 wire:loading.remove
+            >
+                <span x-on:click="expanded = false"
+                      class="fixed z-[9999] top-14 xl:top-36 right-14 text-2xl text-gray-400 cursor-pointer"
+                >&#x2715;
+                </span>
 
-            <div class="p-10 top-10 xl:top-32 left-10 right-10 bg-black rounded-lg fixed overflow-y-auto max-h-[75vh] z-0">
-                <div class="grid md:grid-cols-3 grid-cols-1 gap-4">
-                    @foreach($images['backdrops'] as $backdrops)
-                        <img src="https://image.tmdb.org/t/p/w300{{ $backdrops['file_path'] }}" alt="{{ $movieTitle }}"
-                             class="ml-auto mr-auto mt-2 rounded-lg"
-                        >
-                        @if ($loop->iteration === 9)
-                            @break
-                        @endif
-                    @endforeach
+                <div class="p-10 top-10 xl:top-32 left-10 right-10 bg-black rounded-lg fixed overflow-y-auto max-h-[75vh] z-[999]">
+                    <div class="grid md:grid-cols-3 grid-cols-1 gap-4">
+                        @foreach($images['backdrops'] as $backdrops)
+                            <img src="https://image.tmdb.org/t/p/w300{{ $backdrops['file_path'] }}"
+                                 alt="{{ $movieTitle }}"
+                                 class="ml-auto mr-auto mt-2 rounded-lg"
+                            >
+                            @if ($loop->iteration === 9)
+                                @break
+                            @endif
+                        @endforeach
+                    </div>
                 </div>
             </div>
-        </div>
+        @endteleport
     @endif
 </div>

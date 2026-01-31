@@ -4,7 +4,7 @@
         <img src="https://image.tmdb.org/t/p/w500{{ $movie->backdrop_path }}" alt="Your Image"
              class="object-cover mix-blend-overlay opacity-70 w-full">
     </div>
-    <div class="z-50 mr-20">
+    <div class="z-0 mr-20">
         <div class="flex sm:flex-row flex-col ml-20 md:mt-20">
             <x-movie
                 :movie="$movie"

@@ -1,6 +1,6 @@
 @props(['actors', 'title' => null, 'itemsToShow' => null, 'maxContainerSize' => 'max-w-[500px]', 'gridCols' => 'grid-cols-4'])
 
-<div class="flex z-10 flex-col items-center mt-5">
+<div class="flex flex-col items-center mt-5">
     <div class="{{ $maxContainerSize }} max-w-[350px]">
         <h1 class="ml-5 mb-5 text-2xl">{{ $title }}</h1>
         {{$slot}}

@@ -1,10 +1,10 @@
-<nav class="border-b border-gray-700 z-50">
+<nav class="border-b border-gray-700 z-10">
     <ul class="max-w-full md:ml-20 md:mr-20 flex flex-wrap items-center justify-between mx-auto p-4">
-        <li class="group relative dropdown px-4 cursor-pointer font-bold text-base uppercase tracking-wide">
+        <li class="group relative dropdown px-4 cursor-pointer font-bold text-base uppercase tracking-wide z-0">
             <a href="{{ route('home') }}">Movies</a>
             <x-dropdown-menu :class="'left-6'" :typeOfMedia="'movie'" />
         </li>
-        <li class="group relative dropdown px-4 cursor-pointer font-bold text-base uppercase tracking-wide">
+        <li class="group relative dropdown px-4 cursor-pointer font-bold text-base uppercase tracking-wide z-0">
             <a href="{{ route('tv') }}">Tv</a>
             <x-dropdown-menu :class="'right-0'" :typeOfMedia="'tv'" />
         </li>
