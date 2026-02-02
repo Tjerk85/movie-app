@@ -26,7 +26,7 @@
                 <div class="p-10 top-10 xl:top-32 left-10 right-10 bg-black rounded-lg fixed overflow-y-auto max-h-[75vh] z-[10]">
                     <div class="grid md:grid-cols-3 grid-cols-1 gap-4">
                         @foreach($images['backdrops'] as $backdrops)
-                            <livewire:image :imageUrl="$backdrops['file_path']" :movieTitle="$movieTitle" />
+                            <livewire:image x-show="!showImage" :imageUrl="$backdrops['file_path']" :movieTitle="$movieTitle" />
                             @if ($loop->iteration === 9)
                                 @break
                             @endif

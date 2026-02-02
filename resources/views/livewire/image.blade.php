@@ -6,7 +6,7 @@
     >
 
     <div x-on:click.outside="showImage = false" x-show="showImage">
-        <div class="p-10 top-10 xl:top-32 left-10 right-10 bg-black rounded-lg fixed overflow-y-auto max-h-[75vh] z-[99] group">
+            <div class="p-2 md:p-10 top-4 md:top-10 xl:top-32 left-2 md:left-10 right-2 md:right-10 bg-black rounded-lg fixed overflow-y-auto max-h-[80vh] z-[99] group">
             <img x-show="showImage"
                  x-on:click="showImage = false"
                  x-on:click.outside="showImage = false"
