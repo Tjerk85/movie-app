@@ -7,12 +7,14 @@
             <img
                 src="https://image.tmdb.org/t/p/w{{ $imageSize }}/{{ $tvShow->poster_path }}"
                 alt="{{ $tvShow->name }}"
+                class="cursor-pointer hover:scale-105 duration-300 rounded-xl hover:opacity-75 bg-black"
             >
         </a>
     @else
         <img
             src="https://image.tmdb.org/t/p/w{{ $imageSize }}/{{ $tvShow->poster_path }}"
             alt="{{ $tvShow->name }}"
+            class="cursor-pointer hover:scale-105 duration-300 rounded-xl hover:opacity-75 bg-black"
         >
     @endif
 

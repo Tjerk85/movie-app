@@ -3,7 +3,7 @@
              src="https://image.tmdb.org/t/p/w{{ $imageSize }}/{{ $posterPath }}"
              alt="{{ $movieTitle }}"
              wire:click="openImages({{ $movieId }})"
-             class="cursor-pointer hover:scale-105 duration-300 rounded-xl"
+             class="cursor-pointer hover:scale-105 duration-300 rounded-xl hover:opacity-75 bg-black"
         >
 
     <div wire:loading>

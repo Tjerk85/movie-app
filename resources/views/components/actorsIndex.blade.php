@@ -1,10 +1,10 @@
 @props(['actors', 'title' => null, 'itemsToShow' => null, 'maxContainerSize' => 'max-w-[500px]', 'gridCols' => 'grid-cols-4'])
 
-<div class="flex flex-col items-center mt-5">
+<div class="flex flex-col items-center mt-5 z-10">
     <div class="{{ $maxContainerSize }} max-w-[350px]">
         <h1 class="ml-5 mb-5 text-2xl">{{ $title }}</h1>
         {{$slot}}
-        <div class="grid {{ $gridCols }} grid-cols-2 gap-1 justify-center">
+        <div class="grid {{ $gridCols }} grid-cols-2 gap-2 justify-center">
 
             @if(!empty($actors) && $actors instanceof \Illuminate\Support\Collection)
                 @foreach($actors as $actor)

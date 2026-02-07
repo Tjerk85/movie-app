@@ -1,10 +1,12 @@
 @extends('layouts.main')
 @section('content')
     <div class="absolute bg-gray-600 bg-gradient-to-b from-transparent to-gray-950 w-full">
-        <img src="https://image.tmdb.org/t/p/w500{{ $tvShow->backdrop_path }}" alt="Your Image"
-             class="object-cover mix-blend-overlay opacity-70 w-full">
+        @if($tvShow->backdrop_path)
+            <img src="https://image.tmdb.org/t/p/w500{{ $tvShow->backdrop_path }}" alt="Your Image"
+                 class="object-cover mix-blend-overlay opacity-70 w-full">
+        @endif
     </div>
-    <div class="z-10 opacity-75 mr-20">
+    <div class="z-0 opacity-75 mr-20">
         <div class="flex sm:flex-row flex-col ml-20 mt-20">
         <x-tvShow
                 :tvShow="$tvShow"

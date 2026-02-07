@@ -7,6 +7,7 @@
             <img
                 src=@if($movie->poster_path) "https://image.tmdb.org/t/p/w{{ $imageSize }}/{{ $movie->poster_path }} @else {{ url($movie->poster_unknown) }} @endif"
                 alt="{{ $movie->title }}"
+                class="cursor-pointer hover:scale-105 duration-300 rounded-xl hover:opacity-75 bg-black"
             >
         </a>
     @else
