@@ -1,7 +1,7 @@
 @props(['actor' => null, 'link', 'imageSize', 'textSize' => 'text-xs'])
 
 <div class="mb-10 mt-10 flex flex-col mr-2 space-y-8">
-    <p class="max-w-[200px] text-sm text-gray-400 {{ $textSize }}">{{ $actor->name }}</p>
+    <p class="{{ $textSize }}">{{ $actor->name }}</p>
     @if($link)
         <a href="{{ route('showActor', ['id' => $actor->id]) }}">
             <img

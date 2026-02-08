@@ -13,7 +13,7 @@
                             :actor="$actor"
                             :imageSize="400"
                             :link="true"
-                            :textSize="'h-6'"
+                            :textSize="'h-6 text-sm text-gray-400 max-w-[200px]'"
                         />
                     @endif
                 @endforeach

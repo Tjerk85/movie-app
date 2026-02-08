@@ -28,6 +28,8 @@ class EndPoints
 
     public static $TVSHOWREQUEST = '/tv/{$1}?language=en-US&include_adult=false';
 
+    public static $TVIMAGESREQUEST = '/tv/{$1}/images';
+
     public static $MOVIEGENREREREQUEST = '/genre/movie/list?include_adult=false';
 
     public static $TVSHOWGENREREQUEST = '/genre/tv/list?include_adult=false';

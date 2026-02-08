@@ -16,43 +16,51 @@ class Images extends Component
 
     public array $images;
 
-    public int $movieId;
-    public string $movieTitle;
+    public int $mediaId;
 
-    public ?int $activeMovieId = null;
+    public string $title;
+
+    public ?int $activeMediaId = null;
+
+    public string $mediaType = 'movie';
 
     public function render(): View
     {
         return view('livewire/images', [
             'posterPath' => $this->posterPath,
             'imageSize' => $this->imageSize,
-            'movieId' => $this->movieId,
-            'movieTitle' => $this->movieTitle
+            'mediaId' => $this->mediaId,
+            'title' => $this->title
         ]);
     }
 
-    public function openImages(int $movieId): void
+    public function openImages(int $mediaId): void
     {
+        $endPoint = EndPoints::$MOVIEIMAGESREQUEST;
+        if ($this->mediaType !== 'movie') {
+            $endPoint = EndPoints::$TVIMAGESREQUEST;
+        }
+
         $rqClass = MovieImagesRequest::class;
-        $this->activeMovieId = $movieId;
+        $this->activeMediaId = $mediaId;
         $this->images = (array) new MovieService()
             ->getSingleMedium(
-                $movieId,
+                $mediaId,
                 $rqClass,
-                EndPoints::$MOVIEIMAGESREQUEST
+                $endPoint
             );
     }
 
     public function mount(
         string $posterPath,
         int $imageSize,
-        int $movieId,
-        string $movieTitle
+        int $mediaId,
+        string $title
     ): void
     {
         $this->posterPath = $posterPath;
         $this->imageSize = $imageSize;
-        $this->movieId = $movieId;
-        $this->movieTitle = $movieTitle;
+        $this->mediaId = $mediaId;
+        $this->title = $title;
     }
 }

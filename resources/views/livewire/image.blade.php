@@ -1,7 +1,7 @@
 <div x-data="{ showImage: false }">
     <img x-on:click="showImage = !showImage"
          src="https://image.tmdb.org/t/p/w300{{ $imageUrl }}"
-         alt="{{ $movieTitle }}"
+         alt="{{ $title }}"
          class="ml-auto mr-auto mt-2 hover:scale-105 duration-300 rounded-xl cursor-pointer"
     >
 
@@ -11,7 +11,7 @@
                  x-on:click="showImage = false"
                  x-on:click.outside="showImage = false"
                  src="https://image.tmdb.org/t/p/original{{ $imageUrl }}"
-                 alt="{{ $movieTitle }}"
+                 alt="{{ $title }}"
                  class="ml-auto mr-auto mt-2 rounded-lg cursor-pointer"
             >
 

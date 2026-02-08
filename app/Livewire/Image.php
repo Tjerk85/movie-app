@@ -9,13 +9,13 @@ class Image extends Component
 {
     public string $imageUrl;
 
-    public string $movieTitle;
+    public string $title;
 
     public function render(): View
     {
         return view('livewire.image', [
                 'imageUrl' => $this->imageUrl,
-                'movieTitle' => $this->movieTitle
+                'title' => $this->title
             ]
         );
     }

@@ -31,7 +31,6 @@ class MovieImagesRequest extends Request
      */
     public function createDtoFromResponse($response): Images|null
     {
-
         return Images::createMovieObject($response->json());
     }
 }

@@ -1,6 +1,6 @@
 @extends('layouts.main')
 @section('content')
-    <div class="flex flex-col md:flex-row z-10 opacity-75 mr-20">
+    <div class="flex flex-col md:flex-row z-0 opacity-75 mr-20">
         <div class="ml-20 md:mt-20">
             <x-actor
                 :actor="$actor"
