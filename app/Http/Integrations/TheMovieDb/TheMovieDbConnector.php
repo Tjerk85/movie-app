@@ -49,7 +49,11 @@ class TheMovieDbConnector extends Connector implements HasPagination
      */
     protected function defaultConfig(): array
     {
-        return [];
+        return [
+            'timeout' => 60,
+            'connect_timeout' => 60,
+            'force_ip_resolve' => 'v4'
+        ];
     }
 
     public function paginate(Request $request): PagedPaginator
