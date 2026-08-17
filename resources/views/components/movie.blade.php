@@ -18,6 +18,7 @@
                 :title="$movie->title"
                 :mediaType="'movie'"
         />
+        <livewire:trailers :mediaType="'movie'" :mediaId="$movie->id"/>
     @endif
 
     <div class="max-w-[200px]">
