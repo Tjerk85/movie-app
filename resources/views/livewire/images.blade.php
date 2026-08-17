@@ -2,7 +2,7 @@
         <img x-on:click="expanded = !expanded"
              src="https://image.tmdb.org/t/p/w{{ $imageSize }}/{{ $posterPath }}"
              alt="{{ $title }}"
-             wire:click="openImages({{ $mediaId }}, {{ $mediaType }})"
+             wire:click="openImages({{ $mediaId }})"
              class="cursor-pointer hover:scale-105 duration-300 rounded-xl hover:opacity-75 bg-black"
         >
 
@@ -26,9 +26,6 @@
                     <div class="grid md:grid-cols-3 grid-cols-1 gap-4">
                         @foreach($images['backdrops'] as $backdrops)
                             <livewire:image x-show="!showImage" :imageUrl="$backdrops['file_path']" :title="$title" />
-                            @if ($loop->iteration === 9)
-                                @break
-                            @endif
                         @endforeach
                     </div>
                 </div>

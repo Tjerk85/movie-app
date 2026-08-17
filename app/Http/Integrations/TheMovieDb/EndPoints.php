@@ -8,6 +8,8 @@ class EndPoints
 
     public static $MOVIEIMAGESREQUEST = '/movie/{$1}/images';
 
+    public static $MOVIEVIDEOSREQUEST = '/movie/{$1}/videos';
+
     public static $SIMILARMOVIEREQUEST = '/movie/{$1}/similar?language=en-US&page=1&include_adult=false';
 
     public static $POPULARMOVIEREQUEST = '/movie/popular?language=en-US&include_adult=false';
@@ -29,6 +31,8 @@ class EndPoints
     public static $TVSHOWREQUEST = '/tv/{$1}?language=en-US&include_adult=false';
 
     public static $TVIMAGESREQUEST = '/tv/{$1}/images';
+
+    public static $TVVIDEOSREQUEST = '/tv/{$1}/videos';
 
     public static $MOVIEGENREREREQUEST = '/genre/movie/list?include_adult=false';
 

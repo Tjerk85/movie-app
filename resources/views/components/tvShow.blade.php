@@ -11,18 +11,15 @@
             >
         </a>
     @else
-{{--        <img--}}
-{{--            src="https://image.tmdb.org/t/p/w{{ $imageSize }}/{{ $tvShow->poster_path }}"--}}
-{{--            alt="{{ $tvShow->name }}"--}}
-{{--            class="cursor-pointer hover:scale-105 duration-300 rounded-xl hover:opacity-50 bg-black"--}}
-{{--        >--}}
-            <livewire:images
-                    :posterPath="$tvShow->poster_path"
-                    :imageSize="$imageSize"
-                    :mediaId="$tvShow->id"
-                    :title="$tvShow->name"
-                    :mediaType="'tv'"
-            />
+        <livewire:images
+                :posterPath="$tvShow->poster_path"
+                :imageSize="$imageSize"
+                :mediaId="$tvShow->id"
+                :title="$tvShow->name"
+                :mediaType="'tv'"
+        />
+
+        <livewire:trailers :mediaType="'tv'" :mediaId="$tvShow->id"/>
     @endif
 
     <div class="max-w-[200px]">
