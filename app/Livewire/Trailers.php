@@ -14,7 +14,6 @@ class Trailers extends Component
     public string $mediaType;
 
     public int $mediaId;
-    
 
     public function render()
     {
@@ -35,9 +34,19 @@ class Trailers extends Component
                 $endPoint
             );
 
-        $this->videos = array_filter($results,function($value) {
-            return $value['type'] === 'Trailer';
-        });
+        $videoTrailers = array_filter(
+            $results,
+            fn ($value) => $value['type'] === 'Trailer'
+        );
+
+        $videoTeaser = array_filter(
+            $results,
+            fn ($value) => $value['type'] === 'Teaser'
+        );
+
+        $this->videos = array_merge(
+            $videoTrailers,
+            array_slice($videoTeaser, 0, 18)
+        );
     }
-    
 };

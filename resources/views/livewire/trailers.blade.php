@@ -16,7 +16,7 @@
             <div class="md:p-10 p-4 top-10 xl:top-32 left-10 right-10 bg-black rounded-lg fixed overflow-y-auto max-h-[75vh] z-[10] grid md:grid-cols-3 grid-cols-1 gap-4">
                 @foreach ($videos as $video)
                 <div>
-                    <p>{{ $video['name'] }}</p>
+                    <p><strong>{{ $video['type'] }}:</strong> {{ $video['name'] }}</p>
                     <iframe src="https://www.youtube-nocookie.com/embed/{{ $video['key'] }}?si=FaqHkborR8nm4oGF" \
                             title="YouTube video player" 
                             frameborder="0" 
