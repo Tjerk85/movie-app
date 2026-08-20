@@ -44,7 +44,9 @@ class EndPoints
 
     public static $ACTORREQUEST = '/person/{$1}?append_to_response=images,movie_credits,tv_credits&include_adult=false';
 
-    public static $POPULARACTORREQUEST = '/person/popular?adult=false';
+    public static $ACTORIMAGESREQUEST = '/person/{$1}/images';
+
+    public static $POPULARACTORREQUEST = '/person/popular?include_adult=false&language=en-US';
 
     /* {$1} is day ore week */
     public static $TRENDINGACTORREQUEST = '/trending/person/{$1}?include_adult=false';

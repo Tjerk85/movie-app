@@ -5,6 +5,7 @@ namespace App\Http\Integrations\TheMovieDb\Requests\Images;
 use App\Models\Images;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
+use Illuminate\Support\Collection;
 
 class MovieImagesRequest extends Request
 {
@@ -29,8 +30,12 @@ class MovieImagesRequest extends Request
     /**
      * @throws \JsonException
      */
-    public function createDtoFromResponse($response): Images|null
+    public function createDtoFromResponse($response): Images|Collection|array|null
     {
-        return Images::createMovieObject($response->json());
+        if (empty($this->jsonResultKey)) {
+            return Images::createImageObject($response->json());
+        }
+
+        return Images::createImageObject(collect($response->json($this->jsonResultKey)));
     }
 }

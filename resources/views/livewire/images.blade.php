@@ -21,12 +21,17 @@
                       class="fixed z-[99] top-14 xl:top-36 right-14 text-2xl text-gray-400 cursor-pointer"
                 >&#x2715;
                 </span>
-
                 <div class="p-10 top-10 xl:top-32 left-10 right-10 bg-black rounded-lg fixed overflow-y-auto max-h-[75vh] z-[10]">
                     <div class="grid md:grid-cols-3 grid-cols-1 gap-4">
-                        @foreach($images['backdrops'] as $backdrops)
-                            <livewire:image x-show="!showImage" :imageUrl="$backdrops['file_path']" :title="$title" />
-                        @endforeach
+                        @if(!isset($images['backdrops']))
+                            @foreach($images as $items)
+                                <livewire:image x-show="!showImage" :imageUrl="$items['file_path']" :title="$title" />
+                            @endforeach
+                        @else
+                            @foreach($images['backdrops'] as $backdrops)
+                                <livewire:image x-show="!showImage" :imageUrl="$backdrops['file_path']" :title="$title" />
+                            @endforeach
+                        @endif
                     </div>
                 </div>
             </div>

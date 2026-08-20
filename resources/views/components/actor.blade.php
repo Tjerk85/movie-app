@@ -11,11 +11,13 @@
             >
         </a>
     @else
-        <img
-            class="w-[{{$imageSize}}px]"
-            src="https://image.tmdb.org/t/p/w{{ $imageSize }}/{{ $actor->profile_path }}"
-            alt="{{ $actor->name }}"
-        >
+        <livewire:images
+                :posterPath="$actor->profile_path"
+                :imageSize="$imageSize"
+                :mediaId="$actor->id"
+                :title="$actor->name"
+                :mediaType="'actor'"
+        />
     @endif
     {{ $slot }}
 </div>

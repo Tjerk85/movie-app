@@ -56,13 +56,14 @@ abstract class TypeOfMedia
         return empty($results) ? $results : $results->take(8);
     }
 
-    public function getSingleMedium($id, $requestClass, $endpoint)
+    public function getSingleMedium($id, $requestClass, $endpoint, $jsonResultKey = '')
     {
         return $this->connector
             ->send(new $requestClass(
                 $this->endPoints
                     ->set($endpoint, [$id])
-                    ->getEndPoint()
+                    ->getEndPoint(),
+                    $jsonResultKey
             ))
             ->dto();
     }

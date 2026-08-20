@@ -37,8 +37,14 @@ class Images extends Component
     public function openImages(int $mediaId): void
     {
         $endPoint = EndPoints::$MOVIEIMAGESREQUEST;
+        $jsonResultKey = '';
         if ($this->mediaType !== 'movie') {
             $endPoint = EndPoints::$TVIMAGESREQUEST;
+        }
+
+        if ($this->mediaType === 'actor') {
+            $endPoint = EndPoints::$ACTORIMAGESREQUEST;
+            $jsonResultKey = 'profiles';
         }
 
         $rqClass = MovieImagesRequest::class;
@@ -47,7 +53,8 @@ class Images extends Component
             ->getSingleMedium(
                 $mediaId,
                 $rqClass,
-                $endPoint
+                $endPoint,
+                $jsonResultKey
             );
     }
 
