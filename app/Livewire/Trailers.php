@@ -31,7 +31,8 @@ class Trailers extends Component
             ->getSingleMedium(
                 $mediaId,
                 TvShowVideosRequest::class,
-                $endPoint
+                $endPoint,
+                'results'
             );
 
         $videoTrailers = array_filter(

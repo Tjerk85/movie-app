@@ -13,7 +13,7 @@ class TvShowVideosRequest extends Request
 
     public function __construct(
         protected readonly string $endPoint,
-        protected readonly string $jsonResultKey = 'results',
+        protected readonly string $jsonResultKey = '',
     ) {}
 
     /**
