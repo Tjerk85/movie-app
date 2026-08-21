@@ -27,6 +27,7 @@ readonly class TvShow
         public string $name,
         public float $vote_average,
         public int $vote_count,
+        public ?string $imdb_id
     ) {}
 
     /**
@@ -68,6 +69,7 @@ readonly class TvShow
             $object['name'],
             $object['vote_average'],
             $object['vote_count'],
+            $object['external_ids']['imdb_id'] ?? null
         );
     }
 

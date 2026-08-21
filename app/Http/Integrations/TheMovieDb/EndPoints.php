@@ -28,7 +28,7 @@ class EndPoints
 
     public static $SIMILARTVSHOWSREQUEST = '/tv/{$1}/similar?language=en-US&page=1&include_adult=false';
 
-    public static $TVSHOWREQUEST = '/tv/{$1}?language=en-US&include_adult=false';
+    public static $TVSHOWREQUEST = '/tv/{$1}?language=en-US&include_adult=false&append_to_response=external_ids';
 
     public static $TVIMAGESREQUEST = '/tv/{$1}/images';
 

@@ -28,6 +28,7 @@ readonly class Movie
         public int $vote_count,
         public bool $video,
         public bool $adult,
+        public ?string $imdb_id
     ) {}
 
     /**
@@ -67,7 +68,8 @@ readonly class Movie
             $object['popularity'],
             $object['vote_count'],
             $object['video'],
-            $object['adult']
+            $object['adult'],
+            $object['imdb_id'] ?? null
         );
     }
 

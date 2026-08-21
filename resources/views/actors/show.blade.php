@@ -22,9 +22,11 @@
                 <p class="content-center"><span class="font-bold">Also known as: </span>
                     {{ implode(", ", $actor->also_known_as) }}
                 </p>
-                <p class="content-center"><span class="font-bold">imdb_id: </span>
-                    {{ $actor->imdb_id  }}
-                    {{-- todo make request to: https://api.themoviedb.org/3/find/nm5896355?external_source=imdb_id --}}
+                <p class="content-center"><span class="font-bold">External sites: </span>
+                    <a target="_blank" 
+                        href="https://www.imdb.com/name/{{ $actor->imdb_id }}" 
+                        class="text-blue-700">Imdb
+                    </a>
                 </p>
             </x-actor>
         </div>

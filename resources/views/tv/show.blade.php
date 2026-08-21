@@ -22,7 +22,13 @@
                         @endforeach
                     </p>
                 @endif
-
+                <p>
+                    <span class="font-bold">External sites: </span>
+                    <a target="_blank" 
+                        href="https://www.imdb.com/title/{{ $tvShow->imdb_id }}" 
+                        class="text-blue-700">Imdb
+                    </a>
+                </p>
             </x-tvShow>
             <p class="content-center m-auto ml-0 md:ml-10">{{ $tvShow->overview }}</p>
         </div>
